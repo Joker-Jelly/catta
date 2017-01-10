@@ -25,11 +25,11 @@ request('./data/simple.json').then(function (res) {
 | ---------- | :------------------------------------ | :-------------------------: | :-------: | :-------: | :-------: |
 | type       | restrict request type                 |   { fetch, ajax, jsonp }    |     —     |     —     |     —     |
 | method     | request method                        |     { **get** , post }      |     √     |     √     |     √     |
+| data       | the data send to server               | Object/Form Element **[3]** |     √     |     √     |     √     |
 | timeout    | throw timeout error after **seconds** |           number            | ! **[1]** |     √     | ! **[1]** |
 | resultType | the type of result                    |     { **text**, json }      |     √     | ! **[2]** | ! **[2]** |
 | cross      | Whether can cross origin              |           boolean           |     √     |     √     |     √     |
 | withCookie | Whether send cookie when cross origin |           boolean           |     √     |     √     |     √     |
-| data       | the data send to server               | Object/Form Element **[3]** |     √     |     √     |     √     |
 
 **√**  Supported      **!** Partial Supported      **×** Not Supported
 
