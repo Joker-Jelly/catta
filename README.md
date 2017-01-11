@@ -5,14 +5,49 @@ Support Fetch, AJAX, JSONP and even custom your own adapter.
 - Very easy to use
 - Uniform options for each adapter
 - Custom own adapter
+- light weight, less then 3KB (min + gzip)
+
+
+
+## Usage
+
+### Install First
+
+```shell
+# local install
+npm install deft-request --save
+```
+
+
+
+### Then import to your project
 
 ```javascript
-// Very Simple to use
-const request = require('deft-request');
+// With ES6 - *Recommend*
+import request from 'deft-request';
 
-request('./data/simple.json').then(function (res) {
+request.default('./data/simple.json').then(function (res) {
   console.log(res);
 });
+```
+
+```javascript
+// With CommonJS
+const request = require('deft-request');
+
+request.default('./data/simple.json').then(function (res) {
+  console.log(res);
+});
+```
+
+```html
+<!-- And also with <script> in HTML - *Not Recommend* -->
+<script src="./node_modules/deft-request/dist/request.js"></script>
+<script>
+  request.default('./data/simple.json').then(function (res) {
+    console.log(res);
+  });
+</script>
 ```
 
 
@@ -68,6 +103,12 @@ request({
 .then(res => console.log(res))
 .catch(err => console.log(err));
 ```
+
+
+
+## Attention
+
+- **This component need Promise support**, but you can import polyfill yourself when no promise.
 
 
 
