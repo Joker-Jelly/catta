@@ -1,9 +1,10 @@
 {
-  "name": "@deft/request",
+  "name": "deft-request",
   "version": "1.0.0",
   "description": "Request client for browser",
   "main": "./dist/request.js",
   "scripts": {
+    "test": "sh ./bin/test.sh",
     "dist": "sh ./bin/dist.sh"
   },
   "author": "Jelly",
