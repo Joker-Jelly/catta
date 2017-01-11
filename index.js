@@ -5,11 +5,11 @@
  * @author jelly
  */
 
-import {assign, initOpts, isSupport} from './lib/core';
+import { assign, initOpts, isSupport } from './lib/core';
 
-import _ajax   from './lib/ajax';
-import _fetch  from './lib/fetch';
-import _jsonp  from './lib/jsonp';
+import _ajax from './lib/ajax';
+import _fetch from './lib/fetch';
+import _jsonp from './lib/jsonp';
 
 /*------------------------------------------------------------*/
 
@@ -61,7 +61,7 @@ export function jsonp(opts) {
  * @return {Promise} - request promise
  */
 export function fetch(opts) {
- return _fetch(opts);
+  return _fetch(opts);
 }
 
 /**
@@ -69,7 +69,7 @@ export function fetch(opts) {
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-export default function (opts) {
+export default function(opts) {
   opts = initOpts(opts);
 
   // first priority: claim type
@@ -82,10 +82,10 @@ export default function (opts) {
   }
 
   // second priority: custom adapter
-  for(const name in CUSTOM_ADAPTER_MAP){
+  for (const name in CUSTOM_ADAPTER_MAP) {
     const adapter = CUSTOM_ADAPTER_MAP[name];
 
-    if(adapter.detector(opts)){
+    if (adapter.detector(opts)) {
       return adapter.processor(opts);
     }
   }
