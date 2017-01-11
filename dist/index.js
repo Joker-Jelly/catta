@@ -1,1 +1,670 @@
-!function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}var n={};return e.m=t,e.c=n,e.i=function(t){return t},e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:r})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="/dist/",e(e.s=4)}([function(t,e,n){"use strict";function r(t){return"function"==typeof t}function o(t,e){return Object.keys(t).map(function(n){var r=t[n];return e(r,n)})}function i(t,e){if(t){var n=o(t,function(t,n){if("object"===("undefined"==typeof t?"undefined":c(t))){var r=e?[].concat(e):[];return r.push(n),i(t,r)}if(t=encodeURIComponent(t),e){var o=e[0]+"["+e.slice(1).join("][")+"]["+n+"]";return escape(o)+"="+t}return n+"="+t});return n.join("&")}}function a(t,e){var n=/\?/.test(t);return e.forEach(function(e){void 0!==e&&("object"===("undefined"==typeof e?"undefined":c(e))?o(e,function(e,r){n?t+="&"+r+"="+e:(t+="?"+r+"="+e,n=!0)}):n?t+="&"+e:(t+="?"+e,n=!0))}),t}function u(t,e){if(void 0!==e&&null!==e){if("object"!==("undefined"==typeof e?"undefined":c(e)))return{contentType:f.text,data:e};if(e instanceof HTMLFormElement){if(y.formData&&"post"===t)return{data:new FormData(e)};for(var n={},r=e.elements,o=Array.isArray(r),a=0,r=o?r:r[Symbol.iterator]();;){var u;if(o){if(a>=r.length)break;u=r[a++]}else{if(a=r.next(),a.done)break;u=a.value}var s=u,d=s.name,l=s.tagName,m=s.type,v=s.value,b=(s.files,s.checked),h=s.selectedOptions;if(d){if("post"===t&&"file"===m)throw new Error(p.NOT_SUPPORT("FormData"));if("select-multiple"===m||"select-one"===m)for(var T=h,w=Array.isArray(T),g=0,T=w?T:T[Symbol.iterator]();;){var j;if(w){if(g>=T.length)break;j=T[g++]}else{if(g=T.next(),g.done)break;j=g.value}var O=j;n[d]=O.value}else"checkbox"===m||"radio"===m?b&&(n[d]=v):"INPUT"===l&&(n[d]=v)}}return{contentType:f.simple,data:i(n)}}return{contentType:f.simple,data:i(e)}}}n.d(e,"f",function(){return d}),e.d=a,e.c=u,n.d(e,"b",function(){return p}),n.d(e,"a",function(){return m}),n.d(e,"e",function(){return y});var c="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},f={simple:"application/x-www-form-urlencoded",multipart:"multipart/form-data",text:"text/plain"},s={method:"get",type:"",timeout:3,resultType:"json",cross:!0,withCookie:!0},d=function(t,e){return e.split(".").every(function(e){if("object"===("undefined"==typeof t?"undefined":c(t))&&t.hasOwnProperty(e))return t=t[e],!0})},l=function(){return"function"!=typeof Object.assign?function(t){if(null==t)throw new TypeError("Cannot convert undefined or null to object");for(var e=Object(t),n=arguments.length,r=Array(n>1?n-1:0),o=1;o<n;o++)r[o-1]=arguments[o];return r.forEach(function(t){if(null!=t)for(var n in t)d(t,n)&&(e[n]=t[n])}),e}:Object.assign}(),p=(function(){return String.prototype.includes?String.prototype.includes:function(t,e){return"number"!=typeof e&&(e=0),!(e+t.length>this.length)&&this.indexOf(t,e)!==-1}}(),{REQUEST:"[Request Error]: the request was failed, please confirm remote origin is correct",TIMEOUT:"[Timeout Error]: the request has been take over given time",UPLOAD_FILE:"[Upload File Error]: Can't upload file without FormData support",NOT_SUPPORT:function(t){return"["+t+" Not Support]: your browser do not support "+t}}),m=function(t){var e=arguments.length>1&&void 0!==arguments[1]&&arguments[1];return"string"==typeof t&&(t={target:t}),e?l(s,t):l({},s,t)},y={globalFetch:r(window.fetch),formData:r(window.FormData)}},function(t,e,n){"use strict";var r=n(0);e.a=function(t){return t=n.i(r.a)(t),new Promise(function(e,o){var i=new XMLHttpRequest;i.onreadystatechange=function(){if(i.readyState===XMLHttpRequest.DONE)if(200===i.status){var n=void 0;n="json"===t.resultType?JSON.parse(i.responseText):i.responseText,e(n)}else o(0===i.status?r.b.TIMEOUT:r.b.REQUEST)};var a=n.i(r.c)(t.method,t.data);"get"===t.method&&a&&(t.target=n.i(r.d)(t.target,[a.data])),i.open(t.method.toUpperCase(),t.target),i.timeout=1e3*t.timeout+50,i.withCredentials=t.withCookie,a&&a.contentType&&i.setRequestHeader("Content-Type",a.contentType),"post"===t.method&&a?i.send(a.data):i.send()})}},function(t,e,n){"use strict";var r=n(0);e.a=function(t){return t=n.i(r.a)(t),new Promise(function(e,o){r.e.globalFetch?!function(){var i={};if(i.method=t.method.toUpperCase(),i.mode=t.cross?"cors":"same-origin",i.credentials=t.withCookie?"include":"omit",t.data){var a=n.i(r.c)(t.method,t.data);a&&a.contentType&&(i.headers={"Content-Type":a.contentType}),"post"===t.method?i.body=a.data:t.target=n.i(r.d)(t.target,[a.data])}var u=window.setTimeout(function(){o(r.b.TIMEOUT)},1e3*t.timeout+50);fetch(t.target,i).then(function(n){window.clearTimeout(u);var r=void 0;r="response"===t.resultType?n:"json"===t.resultType?n.json():n.text(),e(r)}).catch(function(t){window.clearTimeout(u),o(r.b.REQUEST,t)})}():o(r.b.NOT_SUPPORT("GlobalFetch"))})}},function(t,e,n){"use strict";var r=n(0);e.a=function(t){return t=n.i(r.a)(t),new Promise(function(e,o){var i=String(Math.random()).replace(".",""),a=n.i(r.f)(t,"jsonp.callbackFuncName")||"jsonp"+i,u=t.target,c=n.i(r.c)("get",t.data),f=document.createElement("script");f.src=n.i(r.d)(u,[{callback:a},c&&c.data]),f.onerror=function(){o(r.b.REQUEST),window.clearTimeout(s)},document.body.appendChild(f);var s=window.setTimeout(function(){o(r.b.TIMEOUT)},1e3*t.timeout+50);window[a]=function(){window.clearTimeout(s),e.apply(void 0,arguments),window[a]=void 0,document.body.removeChild(f)}})}},function(t,e,n){"use strict";function r(t,e){l[t]=e}function o(t){n.i(c.a)(t,!0)}function i(t){return n.i(f.a)(t)}function a(t){return n.i(d.a)(t)}function u(t){return n.i(s.a)(t)}var c=n(0),f=n(1),s=n(2),d=n(3);Object.defineProperty(e,"__esModule",{value:!0}),e.customAdapter=r,e.globalConfig=o,e.ajax=i,e.jsonp=a,e.fetch=u;var l={};e.default=function(t){if(t=n.i(c.a)(t),"ajax"===t.type)return n.i(f.a)(t);if("jsonp"===t.type)return n.i(d.a)(t);if("fetch"===t.type)return n.i(s.a)(t);for(var e in l){var r=l[e];if(r.detector(t))return r.processor(t)}return c.e.globalFetch?n.i(s.a)(t):n.i(f.a)(t)}}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/dist/";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* unused harmony export noop */
+/* harmony export (binding) */ __webpack_require__.d(exports, "f", function() { return has; });
+/* unused harmony export assign */
+/* unused harmony export includes */
+/* unused harmony export serialize */
+/* harmony export (immutable) */ exports["d"] = combineUrlQuery;
+/* harmony export (immutable) */ exports["c"] = getRequestData;
+/* harmony export (binding) */ __webpack_require__.d(exports, "b", function() { return ERROR; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return initOpts; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "e", function() { return isSupport; });
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/*------------------------------------------------------------*/
+/* Const */
+
+var MODULE_NAME = 'Deft-Request';
+
+var ENCTYPE = {
+  'simple': 'application/x-www-form-urlencoded',
+  'multipart': 'multipart/form-data',
+  'text': 'text/plain'
+};
+
+var DEFAULT_OPTIONS = {
+  method: 'get',
+  type: '',
+  timeout: 3,
+  resultType: 'json',
+  cross: true,
+  withCookie: true
+};
+
+/*------------------------------------------------------------*/
+/* Utils */
+
+/* inner */
+function _isFunction(obj) {
+  return typeof obj === 'function';
+}
+
+function _mapObject(obj, func) {
+  return Object.keys(obj).map(function (key) {
+    var value = obj[key];
+
+    return func(value, key);
+  });
+}
+
+/* outer */
+var noop = function noop() {};
+
+var has = function has(obj, path) {
+  return path.split('.').every(function (prop) {
+    if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && obj.hasOwnProperty(prop)) {
+      obj = obj[prop];
+      return true;
+    }
+  });
+};
+
+var assign = function () {
+  if (typeof Object.assign != 'function') {
+    return function (target) {
+      if (target == null) {
+        throw new TypeError('Cannot convert undefined or null to object');
+      }
+
+      var result = Object(target);
+
+      for (var _len = arguments.length, varArgs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        varArgs[_key - 1] = arguments[_key];
+      }
+
+      varArgs.forEach(function (nextSource) {
+        if (nextSource != null) {
+          for (var nextKey in nextSource) {
+            if (has(nextSource, nextKey)) {
+              result[nextKey] = nextSource[nextKey];
+            }
+          }
+        }
+      });
+      return result;
+    };
+  } else {
+    return Object.assign;
+  }
+}();
+
+var includes = function () {
+  if (!String.prototype.includes) {
+    return function (search, start) {
+      'use strict';
+
+      if (typeof start !== 'number') {
+        start = 0;
+      }
+
+      if (start + search.length > this.length) {
+        return false;
+      } else {
+        return this.indexOf(search, start) !== -1;
+      }
+    };
+  } else {
+    return String.prototype.includes;
+  }
+}();
+
+function serialize(data, prevKeySet) {
+  if (!data) {
+    return;
+  }
+
+  var resultSet = _mapObject(data, function (value, key) {
+    if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
+      var prevKeySetTemp = prevKeySet ? [].concat(prevKeySet) : [];
+      prevKeySetTemp.push(key);
+      return serialize(value, prevKeySetTemp);
+    } else {
+
+      // encode value
+      value = encodeURIComponent(value);
+      if (prevKeySet) {
+        var deepKey = prevKeySet[0] + '[' + prevKeySet.slice(1).join('][') + '][' + key + ']';
+
+        return escape(deepKey) + '=' + value;
+      } else {
+        return key + '=' + value;
+      }
+    }
+  });
+
+  return resultSet.join('&');
+};
+
+function combineUrlQuery(url, params) {
+  var hasParam = /\?/.test(url);
+
+  params.forEach(function (param) {
+    if (param === undefined) return;
+
+    if ((typeof param === 'undefined' ? 'undefined' : _typeof(param)) === 'object') {
+      _mapObject(param, function (value, key) {
+        if (!hasParam) {
+          url += '?' + key + '=' + value;
+          hasParam = true;
+        } else {
+          url += '&' + key + '=' + value;
+        }
+      });
+    } else {
+      if (!hasParam) {
+        url += '?' + param;
+        hasParam = true;
+      } else {
+        url += '&' + param;
+      }
+    }
+  });
+
+  return url;
+};
+
+function getRequestData(method, originData) {
+  if (originData === undefined || originData === null) {
+    return;
+  } else if ((typeof originData === 'undefined' ? 'undefined' : _typeof(originData)) !== 'object') {
+    return {
+      contentType: ENCTYPE.text,
+      data: originData
+    };
+  }
+
+  if (originData instanceof HTMLFormElement) {
+
+    // only post can send FormData
+    if (isSupport.formData && method === 'post') {
+      return {
+        data: new FormData(originData)
+      };
+    } else {
+      var tmpData = {};
+      for (var _iterator = originData.elements, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+        var _ref;
+
+        if (_isArray) {
+          if (_i >= _iterator.length) break;
+          _ref = _iterator[_i++];
+        } else {
+          _i = _iterator.next();
+          if (_i.done) break;
+          _ref = _i.value;
+        }
+
+        var _ref2 = _ref,
+            name = _ref2.name,
+            tagName = _ref2.tagName,
+            type = _ref2.type,
+            value = _ref2.value,
+            files = _ref2.files,
+            checked = _ref2.checked,
+            selectedOptions = _ref2.selectedOptions;
+
+        if (!name) {
+          continue;
+        }
+
+        if (method === 'post' && type === 'file') {
+
+          // partial support upload file with FormData
+          throw new Error(ERROR.NOT_SUPPORT('FormData'));
+          throw new Error(ERROR.UPLOAD_FILE);
+        } else if (type === 'select-multiple' || type === 'select-one') {
+          for (var _iterator2 = selectedOptions, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+            var _ref3;
+
+            if (_isArray2) {
+              if (_i2 >= _iterator2.length) break;
+              _ref3 = _iterator2[_i2++];
+            } else {
+              _i2 = _iterator2.next();
+              if (_i2.done) break;
+              _ref3 = _i2.value;
+            }
+
+            var el = _ref3;
+
+            tmpData[name] = el.value;
+          }
+        } else if (type === 'checkbox' || type === 'radio') {
+          if (checked) {
+            tmpData[name] = value;
+          }
+        } else if (tagName === 'INPUT') {
+          tmpData[name] = value;
+        }
+      }
+      return {
+        contentType: ENCTYPE.simple,
+        data: serialize(tmpData)
+      };
+    }
+  } else {
+    return {
+      contentType: ENCTYPE.simple,
+      data: serialize(originData)
+    };
+  }
+};
+
+/*------------------------------------------------------------*/
+/* Config */
+
+// error msg set
+var ERROR = {
+  REQUEST: '[Request Error]: the request was failed, please confirm remote origin is correct',
+  TIMEOUT: '[Timeout Error]: the request has been take over given time',
+
+  /*------------------------------------------------------------*/
+  UPLOAD_FILE: '[Upload File Error]: Can\'t upload file without FormData support',
+  NOT_SUPPORT: function NOT_SUPPORT(feature) {
+    return '[' + feature + ' Not Support]: your browser do not support ' + feature;
+  }
+};
+
+// initial opts
+var initOpts = function initOpts(opts) {
+  var isOverwriteDefault = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+
+  // single url
+  if (typeof opts === 'string') {
+    opts = {
+      target: opts
+    };
+  }
+
+  if (!isOverwriteDefault) {
+    return assign({}, DEFAULT_OPTIONS, opts);
+  } else {
+    return assign(DEFAULT_OPTIONS, opts);
+  }
+};
+
+var isSupport = {
+  globalFetch: _isFunction(window.fetch),
+  formData: _isFunction(window.FormData)
+};
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core__ = __webpack_require__(0);
+
+
+
+/* harmony default export */ exports["a"] = function (opts) {
+  opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["a" /* initOpts */])(opts);
+
+  return new Promise(function (resolve, reject) {
+    var httpRequest = new XMLHttpRequest();
+
+    httpRequest.onreadystatechange = function () {
+      if (httpRequest.readyState === XMLHttpRequest.DONE) {
+        if (httpRequest.status === 200) {
+          var result = void 0;
+
+          if (opts.resultType === 'json') {
+            result = JSON.parse(httpRequest.responseText);
+          } else {
+            result = httpRequest.responseText;
+          }
+
+          resolve(result);
+        } else if (httpRequest.status === 0) {
+          reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].TIMEOUT);
+        } else {
+          reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].REQUEST);
+        }
+      }
+    };
+
+    var requestData = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["c" /* getRequestData */])(opts.method, opts.data);
+
+    if (opts.method === 'get' && requestData) {
+
+      // others use query
+      opts.target = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["d" /* combineUrlQuery */])(opts.target, [requestData.data]);
+    }
+
+    httpRequest.open(opts.method.toUpperCase(), opts.target);
+
+    // xhr support timeout
+    httpRequest.timeout = opts.timeout * 1e3 + 50;
+
+    // cross origin, send request with cookie
+    httpRequest.withCredentials = opts.withCookie;
+
+    if (requestData && requestData.contentType) {
+      httpRequest.setRequestHeader('Content-Type', requestData.contentType);
+    }
+
+    // only post can send data
+    if (opts.method === 'post' && requestData) {
+      httpRequest.send(requestData.data);
+    } else {
+      httpRequest.send();
+    }
+  });
+};;
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core__ = __webpack_require__(0);
+
+
+
+/* harmony default export */ exports["a"] = function (opts) {
+  opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["a" /* initOpts */])(opts);
+
+  return new Promise(function (resolve, reject) {
+    if (__WEBPACK_IMPORTED_MODULE_0__core__["e" /* isSupport */].globalFetch) {
+      (function () {
+        var init = {};
+
+        init.method = opts.method.toUpperCase();
+        init.mode = opts.cross ? 'cors' : 'same-origin';
+        init.credentials = opts.withCookie ? 'include' : 'omit';
+
+        if (opts.data) {
+
+          // only post can have body
+          var requestData = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["c" /* getRequestData */])(opts.method, opts.data);
+
+          if (requestData && requestData.contentType) {
+            init.headers = {
+              'Content-Type': requestData.contentType
+            };
+          }
+
+          // only post can send data
+          if (opts.method === 'post') {
+            init.body = requestData.data;
+          } else {
+
+            // others use query
+            opts.target = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["d" /* combineUrlQuery */])(opts.target, [requestData.data]);
+          }
+        }
+
+        var timerTrackID = window.setTimeout(function () {
+          reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].TIMEOUT);
+        }, opts.timeout * 1e3 + 50); // with some buffer
+
+        var doFetch = fetch(opts.target, init).then(function (res) {
+          window.clearTimeout(timerTrackID);
+
+          var result = void 0;
+          if (opts.resultType === 'response') {
+            result = res;
+          } else if (opts.resultType === 'json') {
+            result = res.json();
+          } else {
+            result = res.text();
+          }
+
+          resolve(result);
+        }).catch(function (err) {
+          window.clearTimeout(timerTrackID);
+
+          reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].REQUEST, err);
+        });
+      })();
+    } else {
+      reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].NOT_SUPPORT('GlobalFetch'));
+    }
+  });
+};;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core__ = __webpack_require__(0);
+
+
+
+/* harmony default export */ exports["a"] = function (opts) {
+  opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["a" /* initOpts */])(opts);
+
+  return new Promise(function (resolve, reject) {
+    // jsonp random id
+    var randomSeed = String(Math.random()).replace('.', '');
+    var id = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["f" /* has */])(opts, 'jsonp.callbackFuncName') || 'jsonp' + randomSeed;
+    var url = opts.target;
+    var requestData = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["c" /* getRequestData */])('get', opts.data);
+
+    /*------------------------------------------------------------*/
+    var el = document.createElement('script');
+
+    // data parse and set
+    el.src = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["d" /* combineUrlQuery */])(url, [{ callback: id }, requestData && requestData.data]);
+
+    el.onerror = function () {
+      reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].REQUEST);
+
+      // clear timer to prevent error
+      window.clearTimeout(timerTrackID);
+    };
+
+    // send jsonp request
+    document.body.appendChild(el);
+
+    /*------------------------------------------------------------*/
+
+    // timeout track
+    var timerTrackID = window.setTimeout(function () {
+      reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].TIMEOUT);
+    }, opts.timeout * 1e3 + 50); // with some buffer
+
+    // callback func
+    window[id] = function () {
+
+      // clear timer to prevent error
+      window.clearTimeout(timerTrackID);
+
+      resolve.apply(undefined, arguments);
+
+      window[id] = undefined;
+      document.body.removeChild(el);
+    };
+  });
+};;
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_ajax__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib_fetch__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_jsonp__ = __webpack_require__(3);
+Object.defineProperty(exports, "__esModule", { value: true });
+/* harmony export (immutable) */ exports["customAdapter"] = customAdapter;
+/* harmony export (immutable) */ exports["globalConfig"] = globalConfig;
+/* harmony export (immutable) */ exports["ajax"] = ajax;
+/* harmony export (immutable) */ exports["jsonp"] = jsonp;
+/* harmony export (immutable) */ exports["fetch"] = fetch;
+/**
+ * Request client for browser.
+ * Support Fetch, AJAX, JSONP and even custom your own adapter
+ *
+ * @author jelly
+ */
+
+
+
+
+
+
+
+/*------------------------------------------------------------*/
+
+var CUSTOM_ADAPTER_MAP = {};
+
+/**
+ * Custom your own adapter
+ * Adapter is just a Object that have two prop. {detector, processor} in it
+ *
+ * @param  {String} name    - adapter name
+ * @param  {Object} adapter - Adapter object
+ */
+function customAdapter(name, adapter) {
+  CUSTOM_ADAPTER_MAP[name] = adapter;
+}
+
+/**
+ * Set Global Config of the request client, that will affect all the request
+ * @param  {Object} opts - the options set globally
+ */
+function globalConfig(opts) {
+
+  // overwrite default global config, that will affect all request
+  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_core__["a" /* initOpts */])(opts, true);
+};
+
+/**
+ * Only make AJAX request
+ * @param  {Object} opts - request options
+ * @return {Promise} - request promise
+ */
+function ajax(opts) {
+  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__lib_ajax__["a" /* default */])(opts);
+}
+
+/**
+ * Only make JSONP request
+ * @param  {Object} opts - request options
+ * @return {Promise} - request promise
+ */
+function jsonp(opts) {
+  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__lib_jsonp__["a" /* default */])(opts);
+}
+
+/**
+ * Only make Fetch request
+ * @param  {Object} opts - request options
+ * @return {Promise} - request promise
+ */
+function fetch(opts) {
+  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__lib_fetch__["a" /* default */])(opts);
+}
+
+/**
+ * Request client that has all adapter capability
+ * @param  {Object} opts - request options
+ * @return {Promise} - request promise
+ */
+/* harmony default export */ exports["default"] = function (opts) {
+  opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_core__["a" /* initOpts */])(opts);
+
+  // first priority: claim type
+  if (opts.type === 'ajax') {
+    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__lib_ajax__["a" /* default */])(opts);
+  } else if (opts.type === 'jsonp') {
+    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__lib_jsonp__["a" /* default */])(opts);
+  } else if (opts.type === 'fetch') {
+    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__lib_fetch__["a" /* default */])(opts);
+  }
+
+  // second priority: custom adapter
+  for (var name in CUSTOM_ADAPTER_MAP) {
+    var adapter = CUSTOM_ADAPTER_MAP[name];
+
+    if (adapter.detector(opts)) {
+      return adapter.processor(opts);
+    }
+  }
+
+  // third priority: fetch -> ajax
+  if (__WEBPACK_IMPORTED_MODULE_0__lib_core__["e" /* isSupport */].globalFetch) {
+    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__lib_fetch__["a" /* default */])(opts);
+  } else {
+    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__lib_ajax__["a" /* default */])(opts);
+  }
+};
+
+/***/ }
+/******/ ]);

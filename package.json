@@ -1,8 +1,8 @@
 {
   "name": "deft-request",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Request client for browser",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

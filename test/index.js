@@ -1,4 +1,4 @@
-import request from '../index';
+import request from '../dist/index';
 
 window.request = request;
 
