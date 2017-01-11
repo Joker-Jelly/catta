@@ -1,4 +1,7 @@
-import request from '../dist/index';
+import request, {globalConfig} from '../dist/index';
+
+console.assert(typeof request === 'function', 'request is not a function !!!');
+console.assert(typeof globalConfig === 'function', 'globalConfig is not a function !!!');
 
 window.request = request;
 
