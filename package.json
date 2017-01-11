@@ -1,10 +1,10 @@
 {
-  "name": "deft-request",
-  "version": "0.0.5",
+  "name": "@deft/request",
+  "version": "1.0.0",
   "description": "Request client for browser",
-  "main": "index.js",
+  "main": "./dist/request.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dist": "sh ./bin/dist.sh"
   },
   "author": "Jelly",
   "license": "MIT"
