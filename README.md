@@ -3,11 +3,16 @@ deft-request is a simple request client for browser
 Support Fetch, AJAX, JSONP and even custom your own adapter.
 
 - Very easy to use
-- Support auto detect browser to choice adapter
+
+- Support auto-detect browser to choice adapter
+
 - Uniform options and usage for each adapter
+
 - Custom own adapter
+
 - light weight, less then 3KB (min + gzip)
 
+  ​
 
 
 ## Usage
@@ -57,15 +62,15 @@ request.default('./data/simple.json').then(function (res) {
 
 ### Common Options
 
-|            | Description                           |            Type             |   Fetch   |   AJAX    |   JSONP   |
-| ---------- | :------------------------------------ | :-------------------------: | :-------: | :-------: | :-------: |
-| type       | restrict request type                 |   { fetch, ajax, jsonp }    |     —     |     —     |     —     |
-| method     | request method                        |     { **get** , post }      |     v     |     v     |     v     |
-| data       | the data send to server               | Object/Form Element **[3]** |     v     |     v     |     v     |
-| timeout    | throw timeout error after **seconds** |           number            | ! **[1]** |     v     | ! **[1]** |
-| resultType | the type of result                    |     { **text**, json, response }      |     v     | ! **[2]** | ! **[2]** |
-| cross      | Whether can cross origin              |           boolean           |     v     |     v     |     v     |
-| withCookie | Whether send cookie when cross origin |           boolean           |     v     |     v     |     v     |
+|            | Description                           |             Type             |   Fetch   |   AJAX    |   JSONP   |
+| ---------- | :------------------------------------ | :--------------------------: | :-------: | :-------: | :-------: |
+| type       | restrict request type                 |    { fetch, ajax, jsonp }    |     —     |     —     |     —     |
+| method     | request method                        |      { **get** , post }      |     v     |     v     |     v     |
+| data       | the data send to server               | Object/Form Element **[3]**  |     v     |     v     |     v     |
+| timeout    | throw timeout error after **seconds** |            number            | ! **[1]** |     v     | ! **[1]** |
+| resultType | the type of result                    | { **text**, json, response } |     v     | ! **[2]** | ! **[2]** |
+| cross      | Whether can cross origin              |           boolean            |     v     |     v     |     v     |
+| withCookie | Whether send cookie when cross origin |           boolean            |     v     |     v     |     v     |
 
 **v**  Supported      **!** Partial Supported      **×** Not Supported
 
@@ -80,6 +85,8 @@ request.default('./data/simple.json').then(function (res) {
 #### Simple
 
 ```javascript
+import request from 'deft-request';
+
 request('./data/simple.json').then(function (res) {
   console.log(res);
 });
@@ -90,6 +97,8 @@ request('./data/simple.json').then(function (res) {
 #### With Options
 
 ```javascript
+import request from 'deft-request';
+
 request({
   target: './data/complex.json',
   data: {
@@ -107,8 +116,31 @@ request({
 
 
 
+### Custom adapter
+
+A custom adapter is just an object, that has `detector` and `processor` function.More detail see [mtop adapter example](https://github.com/Joker-Jelly/deft-request/blob/master/lib/custom/mtop.js)
+
+```javascript
+import {globalConfig, customAdapter} from 'deft-request';
+import mtopAdapter from 'deft-request/lib/custom/mtop';
+
+// set global config, it will work for each request
+globalConfig({
+  timeout: 10
+});
+
+// set mtop adapter
+customAdapter('mtop', mtopAdapter);
+```
+
+
+
 ## Attention
 
+- Auto-detect adapter logic
+  - Specific `options.type`
+  - Each custom adapter
+  - Support fetch ? fetch : ajax
 - **This component need Promise support**, but you can import polyfill yourself when no promise.
 
 
