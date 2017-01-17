@@ -15,61 +15,14 @@ import _jsonp from './lib/jsonp';
 
 const CUSTOM_ADAPTER_MAP = {};
 
-/**
- * Custom your own adapter
- * Adapter is just a Object that have two prop. {detector, processor} in it
- *
- * @param  {String} name    - adapter name
- * @param  {Object} adapter - Adapter object
- */
-export function customAdapter(name, adapter) {
-  CUSTOM_ADAPTER_MAP[name] = adapter;
-}
-
-/**
- * Set Global Config of the request client, that will affect all the request
- * @param  {Object} opts - the options set globally
- */
-export function globalConfig(opts) {
-
-  // overwrite default global config, that will affect all request
-  initOpts(opts, true);
-
-};
-
-/**
- * Only make AJAX request
- * @param  {Object} opts - request options
- * @return {Promise} - request promise
- */
-export function ajax(opts) {
-  return _ajax(opts);
-}
-
-/**
- * Only make JSONP request
- * @param  {Object} opts - request options
- * @return {Promise} - request promise
- */
-export function jsonp(opts) {
-  return _jsonp(opts);
-}
-
-/**
- * Only make Fetch request
- * @param  {Object} opts - request options
- * @return {Promise} - request promise
- */
-export function fetch(opts) {
-  return _fetch(opts);
-}
+/*------------------------------------------------------------*/
 
 /**
  * Request client that has all adapter capability
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-export default function(opts) {
+const request = function(opts) {
   opts = initOpts(opts);
 
   // first priority: claim type
@@ -98,3 +51,54 @@ export default function(opts) {
   }
 
 }
+
+/**
+ * Custom your own adapter
+ * Adapter is just a Object that have two prop. {detector, processor} in it
+ *
+ * @param  {String} name    - adapter name
+ * @param  {Object} adapter - Adapter object
+ */
+request.customAdapter = function(name, adapter) {
+  CUSTOM_ADAPTER_MAP[name] = adapter;
+};
+
+/**
+ * Set Global Config of the request client, that will affect all the request
+ * @param  {Object} opts - the options set globally
+ */
+request.globalConfig = function(opts) {
+
+  // overwrite default global config, that will affect all request
+  initOpts(opts, true);
+
+};
+
+/**
+ * Only make AJAX request
+ * @param  {Object} opts - request options
+ * @return {Promise} - request promise
+ */
+request.ajax = function(opts) {
+  return _ajax(opts);
+}
+
+/**
+ * Only make JSONP request
+ * @param  {Object} opts - request options
+ * @return {Promise} - request promise
+ */
+request.jsonp = function(opts) {
+  return _jsonp(opts);
+}
+
+/**
+ * Only make Fetch request
+ * @param  {Object} opts - request options
+ * @return {Promise} - request promise
+ */
+request.fetch = function(opts) {
+  return _fetch(opts);
+}
+
+module.exports = request;

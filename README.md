@@ -32,7 +32,7 @@ npm install deft-request --save
 // With ES6 - *Recommend*
 import request from 'deft-request';
 
-request.default('./data/simple.json').then(function (res) {
+request('./data/simple.json').then(function (res) {
   console.log(res);
 });
 ```
@@ -41,7 +41,7 @@ request.default('./data/simple.json').then(function (res) {
 // With CommonJS
 const request = require('deft-request');
 
-request.default('./data/simple.json').then(function (res) {
+request('./data/simple.json').then(function (res) {
   console.log(res);
 });
 ```
@@ -50,7 +50,7 @@ request.default('./data/simple.json').then(function (res) {
 <!-- And also with <script> in HTML - *Not Recommend* -->
 <script src="./node_modules/deft-request/dist/request.js"></script>
 <script>
-  request.default('./data/simple.json').then(function (res) {
+  request('./data/simple.json').then(function (res) {
     console.log(res);
   });
 </script>
@@ -64,6 +64,7 @@ request.default('./data/simple.json').then(function (res) {
 
 |            | Description                           |             Type             |   Fetch   |   AJAX    |   JSONP   |
 | ---------- | :------------------------------------ | :--------------------------: | :-------: | :-------: | :-------: |
+| target     | request url                           |            string            |     v     |     v     |     v     |
 | type       | restrict request type                 |    { fetch, ajax, jsonp }    |     —     |     —     |     —     |
 | method     | request method                        |      { **get** , post }      |     v     |     v     |     v     |
 | data       | the data send to server               | Object/Form Element **[3]**  |     v     |     v     |     v     |
@@ -112,6 +113,24 @@ request({
 })
 .then(res => console.log(res))
 .catch(err => console.log(err));
+```
+
+
+
+#### Only use Fetch / AJAX / JSONP
+
+```javascript
+import request, {ajax} from 'deft-request';
+
+request.ajax('./data/simple.json').then(function (res) {
+  console.log(res);
+});
+
+// same as
+
+ajax('./data/simple.json').then(function (res) {
+  console.log(res);
+});
 ```
 
 

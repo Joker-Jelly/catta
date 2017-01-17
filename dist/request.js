@@ -588,12 +588,6 @@ var isSupport = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_ajax__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib_fetch__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_jsonp__ = __webpack_require__(3);
-Object.defineProperty(exports, "__esModule", { value: true });
-/* harmony export (immutable) */ exports["customAdapter"] = customAdapter;
-/* harmony export (immutable) */ exports["globalConfig"] = globalConfig;
-/* harmony export (immutable) */ exports["ajax"] = ajax;
-/* harmony export (immutable) */ exports["jsonp"] = jsonp;
-/* harmony export (immutable) */ exports["fetch"] = fetch;
 /**
  * Request client for browser.
  * Support Fetch, AJAX, JSONP and even custom your own adapter
@@ -611,60 +605,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 
 var CUSTOM_ADAPTER_MAP = {};
 
-/**
- * Custom your own adapter
- * Adapter is just a Object that have two prop. {detector, processor} in it
- *
- * @param  {String} name    - adapter name
- * @param  {Object} adapter - Adapter object
- */
-function customAdapter(name, adapter) {
-  CUSTOM_ADAPTER_MAP[name] = adapter;
-}
-
-/**
- * Set Global Config of the request client, that will affect all the request
- * @param  {Object} opts - the options set globally
- */
-function globalConfig(opts) {
-
-  // overwrite default global config, that will affect all request
-  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_core__["a" /* initOpts */])(opts, true);
-};
-
-/**
- * Only make AJAX request
- * @param  {Object} opts - request options
- * @return {Promise} - request promise
- */
-function ajax(opts) {
-  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__lib_ajax__["a" /* default */])(opts);
-}
-
-/**
- * Only make JSONP request
- * @param  {Object} opts - request options
- * @return {Promise} - request promise
- */
-function jsonp(opts) {
-  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__lib_jsonp__["a" /* default */])(opts);
-}
-
-/**
- * Only make Fetch request
- * @param  {Object} opts - request options
- * @return {Promise} - request promise
- */
-function fetch(opts) {
-  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__lib_fetch__["a" /* default */])(opts);
-}
+/*------------------------------------------------------------*/
 
 /**
  * Request client that has all adapter capability
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-/* harmony default export */ exports["default"] = function (opts) {
+var request = function request(opts) {
   opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_core__["a" /* initOpts */])(opts);
 
   // first priority: claim type
@@ -692,6 +640,56 @@ function fetch(opts) {
     return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__lib_ajax__["a" /* default */])(opts);
   }
 };
+
+/**
+ * Custom your own adapter
+ * Adapter is just a Object that have two prop. {detector, processor} in it
+ *
+ * @param  {String} name    - adapter name
+ * @param  {Object} adapter - Adapter object
+ */
+request.customAdapter = function (name, adapter) {
+  CUSTOM_ADAPTER_MAP[name] = adapter;
+};
+
+/**
+ * Set Global Config of the request client, that will affect all the request
+ * @param  {Object} opts - the options set globally
+ */
+request.globalConfig = function (opts) {
+
+  // overwrite default global config, that will affect all request
+  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_core__["a" /* initOpts */])(opts, true);
+};
+
+/**
+ * Only make AJAX request
+ * @param  {Object} opts - request options
+ * @return {Promise} - request promise
+ */
+request.ajax = function (opts) {
+  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__lib_ajax__["a" /* default */])(opts);
+};
+
+/**
+ * Only make JSONP request
+ * @param  {Object} opts - request options
+ * @return {Promise} - request promise
+ */
+request.jsonp = function (opts) {
+  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__lib_jsonp__["a" /* default */])(opts);
+};
+
+/**
+ * Only make Fetch request
+ * @param  {Object} opts - request options
+ * @return {Promise} - request promise
+ */
+request.fetch = function (opts) {
+  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__lib_fetch__["a" /* default */])(opts);
+};
+
+module.exports = request;
 
 /***/ }
 /******/ ]);

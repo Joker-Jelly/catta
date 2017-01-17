@@ -1,27 +1,26 @@
-const deftRequest = require('../index');
-const request = deftRequest.default;
+import request from '../index';
 const expect = chai.expect;
 
 describe('Basic Test', () => {
 
   it('Has deault request func', () => {
-    expect(deftRequest.default).to.be.a('function');
+    expect(request).to.be.a('function');
   });
 
   it('Has request funcs', () => {
-    expect(deftRequest).to.be.include.keys('fetch', 'ajax', 'jsonp');
-    expect(deftRequest.fetch).to.be.a('function');
-    expect(deftRequest.ajax).to.be.a('function');
-    expect(deftRequest.jsonp).to.be.a('function');
+    expect(request).to.be.include.keys('fetch', 'ajax', 'jsonp');
+    expect(request.fetch).to.be.a('function');
+    expect(request.ajax).to.be.a('function');
+    expect(request.jsonp).to.be.a('function');
 
   });
 
   it('Has globalConfig', () => {
-    expect(deftRequest.globalConfig).to.be.a('function');
+    expect(request.globalConfig).to.be.a('function');
   });
 
   it('Has customAdapter', () => {
-    expect(deftRequest.customAdapter).to.be.a('function');
+    expect(request.customAdapter).to.be.a('function');
   });
 
 });
