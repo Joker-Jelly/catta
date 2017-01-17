@@ -141,7 +141,7 @@ customAdapter('mtop', mtopAdapter);
   - Specific `options.type`
   - Each custom adapter
   - Support fetch ? fetch : ajax
-- **This component need Promise support**, but you can import polyfill yourself when no promise.
+
 
 
 

@@ -1,6 +1,6 @@
 {
   "name": "deft-request",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Request client for browser",
   "main": "./dist/request.js",
   "scripts": {
