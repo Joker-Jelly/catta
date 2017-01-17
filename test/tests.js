@@ -1,4 +1,4 @@
-const deftRequest = require('../dist/request.js');
+const deftRequest = require('../index');
 const request = deftRequest.default;
 const expect = chai.expect;
 

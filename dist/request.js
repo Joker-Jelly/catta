@@ -84,7 +84,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /* unused harmony export noop */
 /* harmony export (binding) */ __webpack_require__.d(exports, "f", function() { return has; });
 /* unused harmony export assign */
-/* unused harmony export includes */
 /* unused harmony export serialize */
 /* harmony export (immutable) */ exports["d"] = combineUrlQuery;
 /* harmony export (immutable) */ exports["c"] = getRequestData;
@@ -92,6 +91,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return initOpts; });
 /* harmony export (binding) */ __webpack_require__.d(exports, "e", function() { return isSupport; });
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /*------------------------------------------------------------*/
 /* Const */
@@ -170,25 +171,40 @@ var assign = function () {
   }
 }();
 
-var includes = function () {
-  if (!String.prototype.includes) {
-    return function (search, start) {
-      'use strict';
+(function () {
+  if (typeof window.Promise !== 'function') {
+    (function () {
+      var resolved = function resolved() {
+        this.onResolved.apply(this, arguments);
+      };
 
-      if (typeof start !== 'number') {
-        start = 0;
-      }
+      var rejected = function rejected() {
+        this.onRejected.apply(this, arguments);
+      };
 
-      if (start + search.length > this.length) {
-        return false;
-      } else {
-        return this.indexOf(search, start) !== -1;
-      }
-    };
-  } else {
-    return String.prototype.includes;
+      window.Promise = function () {
+        function _class(func) {
+          _classCallCheck(this, _class);
+
+          this.onResolved = this.onRejected = noop;
+          func(resolved.bind(this), rejected.bind(this));
+        }
+
+        _class.prototype.then = function then(onResolved) {
+          this.onResolved = onResolved;
+        };
+
+        _class.prototype.catch = function _catch(onRejected) {
+          this.onRejected = onRejected;
+        };
+
+        return _class;
+      }();
+    })();
   }
-}();
+})();
+
+/*------------------------------------------------------------*/
 
 function serialize(data, prevKeySet) {
   if (!data) {
@@ -524,6 +540,7 @@ var isSupport = {
     var id = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["f" /* has */])(opts, 'jsonp.callbackFuncName') || 'jsonp' + randomSeed;
     var url = opts.target;
     var requestData = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["c" /* getRequestData */])('get', opts.data);
+    var rootElement = document.body || document.head;
 
     /*------------------------------------------------------------*/
     var el = document.createElement('script');
@@ -539,7 +556,7 @@ var isSupport = {
     };
 
     // send jsonp request
-    document.body.appendChild(el);
+    rootElement.appendChild(el);
 
     /*------------------------------------------------------------*/
 
@@ -557,7 +574,7 @@ var isSupport = {
       resolve.apply(undefined, arguments);
 
       window[id] = undefined;
-      document.body.removeChild(el);
+      rootElement.removeChild(el);
     };
   });
 };;
