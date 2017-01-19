@@ -1,3 +1,5 @@
+![forthebadge](http://forthebadge.com/images/badges/uses-js.svg) ![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)
+
 ## deft-request
 deft-request 是一个轻量级的 Javascript 浏览器请求框架，支持 Fetch，AJAX，JSONP，甚至支持自定义的请求方式。
 

@@ -1,3 +1,5 @@
+![forthebadge](http://forthebadge.com/images/badges/uses-js.svg) ![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)
+
 ## deft-request
 deft-request is a simple request client for browser
 Support Fetch, AJAX, JSONP and even custom your own adapter.
