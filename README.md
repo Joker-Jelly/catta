@@ -1,6 +1,7 @@
 ## deft-request
 deft-request is a simple request client for browser
 Support Fetch, AJAX, JSONP and even custom your own adapter.
+[中文文档-请点我](https://github.com/deft-party/deft-request/blob/master/README-zhCN.md)
 
 - Very easy to use
 
@@ -12,7 +13,6 @@ Support Fetch, AJAX, JSONP and even custom your own adapter.
 
 - light weight, less then 3KB (min + gzip)
 
-  ​
 
 
 ## Usage
