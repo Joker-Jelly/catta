@@ -612,7 +612,7 @@ var CUSTOM_ADAPTER_MAP = {};
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-var request = function request(opts) {
+var catta = function catta(opts) {
   opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_core__["a" /* initOpts */])(opts);
 
   // first priority: claim type
@@ -648,7 +648,7 @@ var request = function request(opts) {
  * @param  {String} name    - adapter name
  * @param  {Object} adapter - Adapter object
  */
-request.customAdapter = function (name, adapter) {
+catta.customAdapter = function (name, adapter) {
   CUSTOM_ADAPTER_MAP[name] = adapter;
 };
 
@@ -656,7 +656,7 @@ request.customAdapter = function (name, adapter) {
  * Set Global Config of the request client, that will affect all the request
  * @param  {Object} opts - the options set globally
  */
-request.globalConfig = function (opts) {
+catta.globalConfig = function (opts) {
 
   // overwrite default global config, that will affect all request
   __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_core__["a" /* initOpts */])(opts, true);
@@ -667,7 +667,7 @@ request.globalConfig = function (opts) {
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-request.ajax = function (opts) {
+catta.ajax = function (opts) {
   return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__lib_ajax__["a" /* default */])(opts);
 };
 
@@ -676,7 +676,7 @@ request.ajax = function (opts) {
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-request.jsonp = function (opts) {
+catta.jsonp = function (opts) {
   return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__lib_jsonp__["a" /* default */])(opts);
 };
 
@@ -685,11 +685,11 @@ request.jsonp = function (opts) {
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-request.fetch = function (opts) {
+catta.fetch = function (opts) {
   return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__lib_fetch__["a" /* default */])(opts);
 };
 
-module.exports = request;
+module.exports = catta;
 
 /***/ }
 /******/ ]);

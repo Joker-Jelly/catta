@@ -1,7 +1,7 @@
 ![forthebadge](http://forthebadge.com/images/badges/uses-js.svg) ![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)
 
-## deft-request
-deft-request 是一个轻量级的 Javascript 浏览器请求框架，支持 Fetch，AJAX，JSONP，甚至支持自定义的请求方式。
+## catta
+catta 是一个轻量级的 Javascript 浏览器请求框架，支持 Fetch，AJAX，JSONP，甚至支持自定义的请求方式。
 
 - 使用非常非常非常简单
 
@@ -22,7 +22,7 @@ deft-request 是一个轻量级的 Javascript 浏览器请求框架，支持 Fet
 
 ```shell
 # 本地化安装
-npm install deft-request --save
+npm install catta --save
 ```
 
 
@@ -31,27 +31,27 @@ npm install deft-request --save
 
 ```javascript
 // ES6方式 - *推荐*
-import request from 'deft-request';
+import catta from 'catta';
 
-request('./data/simple.json').then(function (res) {
+catta('./data/simple.json').then(function (res) {
   console.log(res);
 });
 ```
 
 ```javascript
 // CommonJS方式
-const request = require('deft-request');
+const catta = require('catta');
 
-request('./data/simple.json').then(function (res) {
+catta('./data/simple.json').then(function (res) {
   console.log(res);
 });
 ```
 
 ```html
 <!-- <script> 标签引入HTML - *不推荐* -->
-<script src="./node_modules/deft-request/dist/request.js"></script>
+<script src="./node_modules/catta/dist/catta.js"></script>
 <script>
-  request('./data/simple.json').then(function (res) {
+  catta('./data/simple.json').then(function (res) {
     console.log(res);
   });
 </script>
@@ -86,9 +86,9 @@ request('./data/simple.json').then(function (res) {
 #### 最简单形式
 
 ```javascript
-import request from 'deft-request';
+import catta from 'catta';
 
-request('./data/simple.json').then(function (res) {
+catta('./data/simple.json').then(function (res) {
   console.log(res);
 });
 ```
@@ -98,9 +98,9 @@ request('./data/simple.json').then(function (res) {
 #### 带参数的形式
 
 ```javascript
-import request from 'deft-request';
+import catta from 'catta';
 
-request({
+catta({
   target: './data/complex.json',
   data: {
     page: 5,
@@ -120,9 +120,9 @@ request({
 #### 单独使用 Fetch / AJAX / JSONP
 
 ```javascript
-import request, {ajax} from 'deft-request';
+import catta, {ajax} from 'catta';
 
-request.ajax('./data/simple.json').then(function (res) {
+catta.ajax('./data/simple.json').then(function (res) {
   console.log(res);
 });
 
@@ -137,11 +137,11 @@ ajax('./data/simple.json').then(function (res) {
 
 ### 自定义请求方式
 
-一个自定义的请求方式就是一个原生对象，对象含有 detector 和 processor 两个方法.更多细节参见 [mtop 请求方式示例](https://github.com/Joker-Jelly/deft-request/blob/master/lib/custom/mtop.js)
+一个自定义的请求方式就是一个原生对象，对象含有 detector 和 processor 两个方法.更多细节参见 [mtop 请求方式示例](https://github.com/Joker-Jelly/catta/blob/master/lib/custom/mtop.js)
 
 ```javascript
-import {globalConfig, customAdapter} from 'deft-request';
-import mtopAdapter from 'deft-request/lib/custom/mtop';
+import {globalConfig, customAdapter} from 'catta';
+import mtopAdapter from 'catta/lib/custom/mtop';
 
 // 设置全局配置，这个配置会在每次请求时均生效
 globalConfig({

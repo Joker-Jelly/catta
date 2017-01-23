@@ -1,9 +1,9 @@
 ![forthebadge](http://forthebadge.com/images/badges/uses-js.svg) ![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)
 
-## deft-request
-deft-request is a simple request client for browser
+## catta
+catta is a simple request client for browser
 Support Fetch, AJAX, JSONP and even custom your own adapter.
-[中文文档-请点我](https://github.com/deft-party/deft-request/blob/master/README-zhCN.md)
+[中文文档-请点我](https://github.com/deft-party/catta/blob/master/README-zhCN.md)
 
 - Very easy to use
 
@@ -23,7 +23,7 @@ Support Fetch, AJAX, JSONP and even custom your own adapter.
 
 ```shell
 # local install
-npm install deft-request --save
+npm install catta --save
 ```
 
 
@@ -32,27 +32,27 @@ npm install deft-request --save
 
 ```javascript
 // With ES6 - *Recommend*
-import request from 'deft-request';
+import catta from 'catta';
 
-request('./data/simple.json').then(function (res) {
+catta('./data/simple.json').then(function (res) {
   console.log(res);
 });
 ```
 
 ```javascript
 // With CommonJS
-const request = require('deft-request');
+const catta = require('catta');
 
-request('./data/simple.json').then(function (res) {
+catta('./data/simple.json').then(function (res) {
   console.log(res);
 });
 ```
 
 ```html
 <!-- And also with <script> in HTML - *Not Recommend* -->
-<script src="./node_modules/deft-request/dist/request.js"></script>
+<script src="./node_modules/catta/dist/catta.js"></script>
 <script>
-  request('./data/simple.json').then(function (res) {
+  catta('./data/simple.json').then(function (res) {
     console.log(res);
   });
 </script>
@@ -88,9 +88,9 @@ request('./data/simple.json').then(function (res) {
 #### Simple
 
 ```javascript
-import request from 'deft-request';
+import catta from 'catta';
 
-request('./data/simple.json').then(function (res) {
+catta('./data/simple.json').then(function (res) {
   console.log(res);
 });
 ```
@@ -100,9 +100,9 @@ request('./data/simple.json').then(function (res) {
 #### With Options
 
 ```javascript
-import request from 'deft-request';
+import catta from 'catta';
 
-request({
+catta({
   target: './data/complex.json',
   data: {
     page: 5,
@@ -122,9 +122,9 @@ request({
 #### Only use Fetch / AJAX / JSONP
 
 ```javascript
-import request, {ajax} from 'deft-request';
+import catta, {ajax} from 'catta';
 
-request.ajax('./data/simple.json').then(function (res) {
+catta.ajax('./data/simple.json').then(function (res) {
   console.log(res);
 });
 
@@ -139,11 +139,11 @@ ajax('./data/simple.json').then(function (res) {
 
 ### Custom adapter
 
-A custom adapter is just an object, that has `detector` and `processor` function.More detail see [mtop adapter example](https://github.com/Joker-Jelly/deft-request/blob/master/lib/custom/mtop.js)
+A custom adapter is just an object, that has `detector` and `processor` function.More detail see [mtop adapter example](https://github.com/Joker-Jelly/catta/blob/master/lib/custom/mtop.js)
 
 ```javascript
-import {globalConfig, customAdapter} from 'deft-request';
-import mtopAdapter from 'deft-request/lib/custom/mtop';
+import {globalConfig, customAdapter} from 'catta';
+import mtopAdapter from 'catta/lib/custom/mtop';
 
 // set global config, it will work for each request
 globalConfig({
@@ -162,7 +162,6 @@ customAdapter('mtop', mtopAdapter);
   - Specific `options.type`
   - Each custom adapter
   - Support fetch ? fetch : ajax
-
 
 
 
