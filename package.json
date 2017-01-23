@@ -1,7 +1,15 @@
 {
   "name": "catta",
   "version": "1.1.0",
-  "description": "Dead simple request client for browser",
+  "description": "Dead simple promise base request client for browser",
+  "keywords": [
+    "promise",
+    "request",
+    "ajax",
+    "fetch",
+    "jsonp",
+    "browser"
+  ],
   "main": "./dist/catta.js",
   "scripts": {
     "test": "sh ./bin/test.sh",
