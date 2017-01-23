@@ -3,7 +3,7 @@
 ## catta
 catta is a simple request client for browser
 Support Fetch, AJAX, JSONP and even custom your own adapter.
-[中文文档-请点我](https://github.com/deft-party/catta/blob/master/README-zhCN.md)
+[中文文档-请点我](https://github.com/Joker-Jelly/catta/blob/master/README-zhCN.md)
 
 - Very easy to use
 
