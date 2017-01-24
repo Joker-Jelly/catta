@@ -41,9 +41,9 @@ catta('./data/simple.json').then(function (res) {
 
 ```javascript
 // With CommonJS
-const catta = require('catta');
+const Catta = require('catta');
 
-catta('./data/simple.json').then(function (res) {
+Catta.default('./data/simple.json').then(function (res) {
   console.log(res);
 });
 ```
@@ -52,7 +52,7 @@ catta('./data/simple.json').then(function (res) {
 <!-- And also with <script> in HTML - *Not Recommend* -->
 <script src="./node_modules/catta/dist/catta.js"></script>
 <script>
-  catta('./data/simple.json').then(function (res) {
+  Catta.default('./data/simple.json').then(function (res) {
     console.log(res);
   });
 </script>
@@ -122,13 +122,7 @@ catta({
 #### Only use Fetch / AJAX / JSONP
 
 ```javascript
-import catta, {ajax} from 'catta';
-
-catta.ajax('./data/simple.json').then(function (res) {
-  console.log(res);
-});
-
-// same as
+import {ajax} from 'catta';
 
 ajax('./data/simple.json').then(function (res) {
   console.log(res);

@@ -22,7 +22,7 @@ const CUSTOM_ADAPTER_MAP = {};
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-const catta = function(opts) {
+export default function(opts) {
   opts = initOpts(opts);
 
   // first priority: claim type
@@ -59,7 +59,7 @@ const catta = function(opts) {
  * @param  {String} name    - adapter name
  * @param  {Object} adapter - Adapter object
  */
-catta.customAdapter = function(name, adapter) {
+export function customAdapter(name, adapter) {
   CUSTOM_ADAPTER_MAP[name] = adapter;
 };
 
@@ -67,7 +67,7 @@ catta.customAdapter = function(name, adapter) {
  * Set Global Config of the request client, that will affect all the request
  * @param  {Object} opts - the options set globally
  */
-catta.globalConfig = function(opts) {
+export function globalConfig(opts) {
 
   // overwrite default global config, that will affect all request
   initOpts(opts, true);
@@ -79,7 +79,7 @@ catta.globalConfig = function(opts) {
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-catta.ajax = function(opts) {
+export function ajax(opts) {
   return _ajax(opts);
 }
 
@@ -88,7 +88,7 @@ catta.ajax = function(opts) {
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-catta.jsonp = function(opts) {
+export function jsonp(opts) {
   return _jsonp(opts);
 }
 
@@ -97,8 +97,6 @@ catta.jsonp = function(opts) {
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-catta.fetch = function(opts) {
+export function fetch(opts) {
   return _fetch(opts);
 }
-
-module.exports = catta;

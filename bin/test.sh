@@ -1,2 +1,2 @@
 open http://localhost:8080/test/index.html
-dev --entrys.test ./test/tests.js
+simplepack dev --entry.test ./test/tests.js

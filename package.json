@@ -1,7 +1,7 @@
 {
   "name": "catta",
-  "version": "1.1.0",
-  "description": "Dead simple promise base request client for browser",
+  "version": "1.2.0",
+  "description": "Simple promise base request client for browser",
   "keywords": [
     "promise",
     "request",
@@ -14,6 +14,10 @@
   "scripts": {
     "test": "sh ./bin/test.sh",
     "dist": "sh ./bin/dist.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:Joker-Jelly/catta.git"
   },
   "author": "Jelly",
   "license": "MIT"

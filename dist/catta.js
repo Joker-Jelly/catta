@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["request"] = factory();
+		exports["Catta"] = factory();
 	else
-		root["request"] = factory();
+		root["Catta"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -78,18 +78,18 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export noop */
-/* harmony export (binding) */ __webpack_require__.d(exports, "f", function() { return has; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return has; });
 /* unused harmony export assign */
 /* unused harmony export serialize */
-/* harmony export (immutable) */ exports["d"] = combineUrlQuery;
-/* harmony export (immutable) */ exports["c"] = getRequestData;
-/* harmony export (binding) */ __webpack_require__.d(exports, "b", function() { return ERROR; });
-/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return initOpts; });
-/* harmony export (binding) */ __webpack_require__.d(exports, "e", function() { return isSupport; });
+/* harmony export (immutable) */ __webpack_exports__["d"] = combineUrlQuery;
+/* harmony export (immutable) */ __webpack_exports__["c"] = getRequestData;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return ERROR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return initOpts; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return isSupport; });
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -387,16 +387,16 @@ var isSupport = {
   formData: _isFunction(window.FormData)
 };
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core__ = __webpack_require__(0);
 
 
 
-/* harmony default export */ exports["a"] = function (opts) {
+/* harmony default export */ __webpack_exports__["a"] = function (opts) {
   opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["a" /* initOpts */])(opts);
 
   return new Promise(function (resolve, reject) {
@@ -415,9 +415,9 @@ var isSupport = {
 
           resolve(result);
         } else if (httpRequest.status === 0) {
-          reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].TIMEOUT);
+          reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].TIMEOUT);
         } else {
-          reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].REQUEST);
+          reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].REQUEST);
         }
       }
     };
@@ -451,20 +451,20 @@ var isSupport = {
   });
 };;
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core__ = __webpack_require__(0);
 
 
 
-/* harmony default export */ exports["a"] = function (opts) {
+/* harmony default export */ __webpack_exports__["a"] = function (opts) {
   opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["a" /* initOpts */])(opts);
 
   return new Promise(function (resolve, reject) {
-    if (__WEBPACK_IMPORTED_MODULE_0__core__["e" /* isSupport */].globalFetch) {
+    if (__WEBPACK_IMPORTED_MODULE_0__core__["b" /* isSupport */].globalFetch) {
       (function () {
         var init = {};
 
@@ -494,7 +494,7 @@ var isSupport = {
         }
 
         var timerTrackID = window.setTimeout(function () {
-          reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].TIMEOUT);
+          reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].TIMEOUT);
         }, opts.timeout * 1e3 + 50); // with some buffer
 
         var doFetch = fetch(opts.target, init).then(function (res) {
@@ -513,25 +513,25 @@ var isSupport = {
         }).catch(function (err) {
           window.clearTimeout(timerTrackID);
 
-          reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].REQUEST, err);
+          reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].REQUEST, err);
         });
       })();
     } else {
-      reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].NOT_SUPPORT('GlobalFetch'));
+      reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].NOT_SUPPORT('GlobalFetch'));
     }
   });
 };;
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core__ = __webpack_require__(0);
 
 
 
-/* harmony default export */ exports["a"] = function (opts) {
+/* harmony default export */ __webpack_exports__["a"] = function (opts) {
   opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["a" /* initOpts */])(opts);
 
   return new Promise(function (resolve, reject) {
@@ -549,7 +549,7 @@ var isSupport = {
     el.src = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["d" /* combineUrlQuery */])(url, [{ callback: id }, requestData && requestData.data]);
 
     el.onerror = function () {
-      reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].REQUEST);
+      reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].REQUEST);
 
       // clear timer to prevent error
       window.clearTimeout(timerTrackID);
@@ -562,7 +562,7 @@ var isSupport = {
 
     // timeout track
     var timerTrackID = window.setTimeout(function () {
-      reject(__WEBPACK_IMPORTED_MODULE_0__core__["b" /* ERROR */].TIMEOUT);
+      reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].TIMEOUT);
     }, opts.timeout * 1e3 + 50); // with some buffer
 
     // callback func
@@ -579,15 +579,21 @@ var isSupport = {
   });
 };;
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_ajax__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib_fetch__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_jsonp__ = __webpack_require__(3);
+/* harmony export (immutable) */ __webpack_exports__["customAdapter"] = customAdapter;
+/* harmony export (immutable) */ __webpack_exports__["globalConfig"] = globalConfig;
+/* harmony export (immutable) */ __webpack_exports__["ajax"] = ajax;
+/* harmony export (immutable) */ __webpack_exports__["jsonp"] = jsonp;
+/* harmony export (immutable) */ __webpack_exports__["fetch"] = fetch;
 /**
  * Request client for browser.
  * Support Fetch, AJAX, JSONP and even custom your own adapter
@@ -612,7 +618,7 @@ var CUSTOM_ADAPTER_MAP = {};
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-var catta = function catta(opts) {
+/* harmony default export */ __webpack_exports__["default"] = function (opts) {
   opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_core__["a" /* initOpts */])(opts);
 
   // first priority: claim type
@@ -634,7 +640,7 @@ var catta = function catta(opts) {
   }
 
   // third priority: fetch -> ajax
-  if (__WEBPACK_IMPORTED_MODULE_0__lib_core__["e" /* isSupport */].globalFetch) {
+  if (__WEBPACK_IMPORTED_MODULE_0__lib_core__["b" /* isSupport */].globalFetch) {
     return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__lib_fetch__["a" /* default */])(opts);
   } else {
     return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__lib_ajax__["a" /* default */])(opts);
@@ -648,7 +654,7 @@ var catta = function catta(opts) {
  * @param  {String} name    - adapter name
  * @param  {Object} adapter - Adapter object
  */
-catta.customAdapter = function (name, adapter) {
+function customAdapter(name, adapter) {
   CUSTOM_ADAPTER_MAP[name] = adapter;
 };
 
@@ -656,7 +662,7 @@ catta.customAdapter = function (name, adapter) {
  * Set Global Config of the request client, that will affect all the request
  * @param  {Object} opts - the options set globally
  */
-catta.globalConfig = function (opts) {
+function globalConfig(opts) {
 
   // overwrite default global config, that will affect all request
   __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_core__["a" /* initOpts */])(opts, true);
@@ -667,30 +673,28 @@ catta.globalConfig = function (opts) {
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-catta.ajax = function (opts) {
+function ajax(opts) {
   return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__lib_ajax__["a" /* default */])(opts);
-};
+}
 
 /**
  * Only make JSONP request
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-catta.jsonp = function (opts) {
+function jsonp(opts) {
   return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__lib_jsonp__["a" /* default */])(opts);
-};
+}
 
 /**
  * Only make Fetch request
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-catta.fetch = function (opts) {
+function fetch(opts) {
   return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__lib_fetch__["a" /* default */])(opts);
-};
+}
 
-module.exports = catta;
-
-/***/ }
+/***/ })
 /******/ ]);
 });

@@ -1,26 +1,25 @@
-import request from '../index';
+import catta, {ajax, jsonp, fetch, globalConfig, customAdapter} from '../index';
 const expect = chai.expect;
 
 describe('Basic Test', () => {
 
   it('Has deault request func', () => {
-    expect(request).to.be.a('function');
+    expect(catta).to.be.a('function');
   });
 
   it('Has request funcs', () => {
-    expect(request).to.be.include.keys('fetch', 'ajax', 'jsonp');
-    expect(request.fetch).to.be.a('function');
-    expect(request.ajax).to.be.a('function');
-    expect(request.jsonp).to.be.a('function');
+    expect(fetch).to.be.a('function');
+    expect(ajax).to.be.a('function');
+    expect(jsonp).to.be.a('function');
 
   });
 
   it('Has globalConfig', () => {
-    expect(request.globalConfig).to.be.a('function');
+    expect(globalConfig).to.be.a('function');
   });
 
   it('Has customAdapter', () => {
-    expect(request.customAdapter).to.be.a('function');
+    expect(customAdapter).to.be.a('function');
   });
 
 });
@@ -31,7 +30,7 @@ describe('Request Test', () => {
     const resource = require('./data/simple.json');
 
     // simple
-    request('./data/simple.json').then(function (res) {
+    catta('./data/simple.json').then(function (res) {
       expect(res).to.be.deep.equal(resource);
       done();
     });
@@ -41,7 +40,7 @@ describe('Request Test', () => {
   it('using ajax', (done) => {
     const resource = require('./data/complex.json');
 
-    request({
+    catta({
       target: './data/complex.json',
       data: {
         a: '1'
@@ -59,7 +58,7 @@ describe('Request Test', () => {
     const resource = require('./data/complex.json');
 
     // using jsonp
-    request({
+    catta({
       target: 'http://wthrcdn.etouch.cn/weather_mini',
       type: 'jsonp',
       data: {
@@ -75,7 +74,7 @@ describe('Request Test', () => {
 
 
   it('using fetch, result is response', (done) => {
-    request({
+    catta({
       target: './data/text.txt',
       resultType: 'response',
       type: 'fetch',
@@ -94,7 +93,7 @@ describe('Special Request Test', () => {
   it('timeout error', (done) => {
 
     // timeout error
-    request({
+    catta({
       target: 'http://wthrcdn.etouch.cn/weather_mini',
       type: 'jsonp',
       resultType: 'json',
