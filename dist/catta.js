@@ -517,7 +517,9 @@ exports.default = function (opts) {
           var requestData = (0, _core.getRequestData)(opts.method, opts.data);
 
           if (requestData && requestData.contentType) {
-            init.headers = {
+
+            // custom headers has top priority
+            init.headers = opts.headers || {
               'Content-Type': requestData.contentType
             };
           }

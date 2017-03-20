@@ -74,6 +74,7 @@ Catta.default('./data/simple.json').then(function (res) {
 | resultType | the type of result                    | { **text**, json, response } |     v     | ! **[2]** | ! **[2]** |
 | cross      | Whether can cross origin              |           boolean            |     v     |     v     |     v     |
 | withCookie | Whether send cookie when cross origin |           boolean            |     v     |     v     |     v     |
+| headers    | custom headers                        |       Headers / Object       |     v     |     x     |     x     |
 
 **v**  Supported      **!** Partial Supported      **×** Not Supported
 

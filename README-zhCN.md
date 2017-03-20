@@ -73,6 +73,7 @@ Catta.default('./data/simple.json').then(function (res) {
 | resultType | 返回值类型                    | { **text**, json, response } |     v     | ! **[2]** | ! **[2]** |
 | cross      | 是否允许跨域请求              |           boolean            |     v     |     v     |     v     |
 | withCookie | 跨域请求是否携带 Cookie |           boolean            |     v     |     v     |     v     |
+| headers    | 自定义头部                        |       Headers / Object       |     v     |     x     |     x     |
 
 **v**  支持      **!** 部分支持      **×** 不支持
 
