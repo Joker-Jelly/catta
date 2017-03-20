@@ -78,19 +78,24 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* unused harmony export noop */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return has; });
-/* unused harmony export assign */
-/* unused harmony export serialize */
-/* harmony export (immutable) */ __webpack_exports__["d"] = combineUrlQuery;
-/* harmony export (immutable) */ __webpack_exports__["c"] = getRequestData;
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return ERROR; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return initOpts; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return isSupport; });
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.serialize = serialize;
+exports.combineUrlQuery = combineUrlQuery;
+exports.getRequestData = getRequestData;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -131,9 +136,9 @@ function _mapObject(obj, func) {
 }
 
 /* outer */
-var noop = function noop() {};
+var noop = exports.noop = function noop() {};
 
-var has = function has(obj, path) {
+var has = exports.has = function has(obj, path) {
   return path.split('.').every(function (prop) {
     if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && obj.hasOwnProperty(prop)) {
       obj = obj[prop];
@@ -142,7 +147,7 @@ var has = function has(obj, path) {
   });
 };
 
-var assign = function () {
+var assign = exports.assign = function () {
   if (typeof Object.assign != 'function') {
     return function (target) {
       if (target == null) {
@@ -190,13 +195,17 @@ var assign = function () {
           func(resolved.bind(this), rejected.bind(this));
         }
 
-        _class.prototype.then = function then(onResolved) {
-          this.onResolved = onResolved;
-        };
-
-        _class.prototype.catch = function _catch(onRejected) {
-          this.onRejected = onRejected;
-        };
+        _createClass(_class, [{
+          key: 'then',
+          value: function then(onResolved) {
+            this.onResolved = onResolved;
+          }
+        }, {
+          key: 'catch',
+          value: function _catch(onRejected) {
+            this.onRejected = onRejected;
+          }
+        }]);
 
         return _class;
       }();
@@ -213,7 +222,7 @@ function serialize(data, prevKeySet) {
 
   var resultSet = _mapObject(data, function (value, key) {
     if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
-      var prevKeySetTemp = prevKeySet ? [].concat(prevKeySet) : [];
+      var prevKeySetTemp = prevKeySet ? [].concat(_toConsumableArray(prevKeySet)) : [];
       prevKeySetTemp.push(key);
       return serialize(value, prevKeySetTemp);
     } else {
@@ -221,7 +230,12 @@ function serialize(data, prevKeySet) {
       // encode value
       value = encodeURIComponent(value);
       if (prevKeySet) {
-        var deepKey = prevKeySet[0] + '[' + prevKeySet.slice(1).join('][') + '][' + key + ']';
+        var deepKey = void 0;
+        if (prevKeySet.length > 1) {
+          deepKey = prevKeySet[0] + '[' + prevKeySet.slice(1).join('][') + '][' + key + ']';
+        } else {
+          deepKey = prevKeySet[0] + '[' + key + ']';
+        }
 
         return escape(deepKey) + '=' + value;
       } else {
@@ -280,61 +294,78 @@ function getRequestData(method, originData) {
       };
     } else {
       var tmpData = {};
-      for (var _iterator = originData.elements, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-        var _ref;
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
-        if (_isArray) {
-          if (_i >= _iterator.length) break;
-          _ref = _iterator[_i++];
-        } else {
-          _i = _iterator.next();
-          if (_i.done) break;
-          _ref = _i.value;
-        }
+      try {
+        for (var _iterator = originData.elements[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var _step$value = _step.value,
+              name = _step$value.name,
+              tagName = _step$value.tagName,
+              type = _step$value.type,
+              value = _step$value.value,
+              files = _step$value.files,
+              checked = _step$value.checked,
+              selectedOptions = _step$value.selectedOptions;
 
-        var _ref2 = _ref,
-            name = _ref2.name,
-            tagName = _ref2.tagName,
-            type = _ref2.type,
-            value = _ref2.value,
-            files = _ref2.files,
-            checked = _ref2.checked,
-            selectedOptions = _ref2.selectedOptions;
-
-        if (!name) {
-          continue;
-        }
-
-        if (method === 'post' && type === 'file') {
-
-          // partial support upload file with FormData
-          throw new Error(ERROR.NOT_SUPPORT('FormData'));
-          throw new Error(ERROR.UPLOAD_FILE);
-        } else if (type === 'select-multiple' || type === 'select-one') {
-          for (var _iterator2 = selectedOptions, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-            var _ref3;
-
-            if (_isArray2) {
-              if (_i2 >= _iterator2.length) break;
-              _ref3 = _iterator2[_i2++];
-            } else {
-              _i2 = _iterator2.next();
-              if (_i2.done) break;
-              _ref3 = _i2.value;
-            }
-
-            var el = _ref3;
-
-            tmpData[name] = el.value;
+          if (!name) {
+            continue;
           }
-        } else if (type === 'checkbox' || type === 'radio') {
-          if (checked) {
+
+          if (method === 'post' && type === 'file') {
+
+            // partial support upload file with FormData
+            throw new Error(ERROR.NOT_SUPPORT('FormData'));
+            throw new Error(ERROR.UPLOAD_FILE);
+          } else if (type === 'select-multiple' || type === 'select-one') {
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+              for (var _iterator2 = selectedOptions[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                var el = _step2.value;
+
+                tmpData[name] = el.value;
+              }
+            } catch (err) {
+              _didIteratorError2 = true;
+              _iteratorError2 = err;
+            } finally {
+              try {
+                if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                  _iterator2.return();
+                }
+              } finally {
+                if (_didIteratorError2) {
+                  throw _iteratorError2;
+                }
+              }
+            }
+          } else if (type === 'checkbox' || type === 'radio') {
+            if (checked) {
+              tmpData[name] = value;
+            }
+          } else if (tagName === 'INPUT') {
             tmpData[name] = value;
           }
-        } else if (tagName === 'INPUT') {
-          tmpData[name] = value;
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
         }
       }
+
       return {
         contentType: ENCTYPE.simple,
         data: serialize(tmpData)
@@ -352,7 +383,7 @@ function getRequestData(method, originData) {
 /* Config */
 
 // error msg set
-var ERROR = {
+var ERROR = exports.ERROR = {
   REQUEST: '[Request Error]: the request was failed, please confirm remote origin is correct',
   TIMEOUT: '[Timeout Error]: the request has been take over given time',
 
@@ -364,7 +395,7 @@ var ERROR = {
 };
 
 // initial opts
-var initOpts = function initOpts(opts) {
+var initOpts = exports.initOpts = function initOpts(opts) {
   var isOverwriteDefault = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
 
@@ -382,22 +413,24 @@ var initOpts = function initOpts(opts) {
   }
 };
 
-var isSupport = {
+var isSupport = exports.isSupport = {
   globalFetch: _isFunction(window.fetch),
   formData: _isFunction(window.FormData)
 };
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core__ = __webpack_require__(0);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-/* harmony default export */ __webpack_exports__["a"] = function (opts) {
-  opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["a" /* initOpts */])(opts);
+exports.default = function (opts) {
+  opts = (0, _core.initOpts)(opts);
 
   return new Promise(function (resolve, reject) {
     var httpRequest = new XMLHttpRequest();
@@ -415,19 +448,19 @@ var isSupport = {
 
           resolve(result);
         } else if (httpRequest.status === 0) {
-          reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].TIMEOUT);
+          reject(_core.ERROR.TIMEOUT);
         } else {
-          reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].REQUEST);
+          reject(_core.ERROR.REQUEST);
         }
       }
     };
 
-    var requestData = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["c" /* getRequestData */])(opts.method, opts.data);
+    var requestData = (0, _core.getRequestData)(opts.method, opts.data);
 
     if (opts.method === 'get' && requestData) {
 
       // others use query
-      opts.target = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["d" /* combineUrlQuery */])(opts.target, [requestData.data]);
+      opts.target = (0, _core.combineUrlQuery)(opts.target, [requestData.data]);
     }
 
     httpRequest.open(opts.method.toUpperCase(), opts.target);
@@ -449,22 +482,28 @@ var isSupport = {
       httpRequest.send();
     }
   });
-};;
+};
+
+var _core = __webpack_require__(0);
+
+;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core__ = __webpack_require__(0);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-/* harmony default export */ __webpack_exports__["a"] = function (opts) {
-  opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["a" /* initOpts */])(opts);
+exports.default = function (opts) {
+  opts = (0, _core.initOpts)(opts);
 
   return new Promise(function (resolve, reject) {
-    if (__WEBPACK_IMPORTED_MODULE_0__core__["b" /* isSupport */].globalFetch) {
+    if (_core.isSupport.globalFetch) {
       (function () {
         var init = {};
 
@@ -475,7 +514,7 @@ var isSupport = {
         if (opts.data) {
 
           // only post can have body
-          var requestData = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["c" /* getRequestData */])(opts.method, opts.data);
+          var requestData = (0, _core.getRequestData)(opts.method, opts.data);
 
           if (requestData && requestData.contentType) {
             init.headers = {
@@ -489,12 +528,12 @@ var isSupport = {
           } else {
 
             // others use query
-            opts.target = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["d" /* combineUrlQuery */])(opts.target, [requestData.data]);
+            opts.target = (0, _core.combineUrlQuery)(opts.target, [requestData.data]);
           }
         }
 
         var timerTrackID = window.setTimeout(function () {
-          reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].TIMEOUT);
+          reject(_core.ERROR.TIMEOUT);
         }, opts.timeout * 1e3 + 50); // with some buffer
 
         var doFetch = fetch(opts.target, init).then(function (res) {
@@ -513,43 +552,49 @@ var isSupport = {
         }).catch(function (err) {
           window.clearTimeout(timerTrackID);
 
-          reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].REQUEST, err);
+          reject(_core.ERROR.REQUEST, err);
         });
       })();
     } else {
-      reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].NOT_SUPPORT('GlobalFetch'));
+      reject(_core.ERROR.NOT_SUPPORT('GlobalFetch'));
     }
   });
-};;
+};
+
+var _core = __webpack_require__(0);
+
+;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core__ = __webpack_require__(0);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-/* harmony default export */ __webpack_exports__["a"] = function (opts) {
-  opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["a" /* initOpts */])(opts);
+exports.default = function (opts) {
+  opts = (0, _core.initOpts)(opts);
 
   return new Promise(function (resolve, reject) {
     // jsonp random id
     var randomSeed = String(Math.random()).replace('.', '');
-    var id = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["f" /* has */])(opts, 'jsonp.callbackFuncName') || 'jsonp' + randomSeed;
+    var id = (0, _core.has)(opts, 'jsonp.callbackFuncName') || 'jsonp' + randomSeed;
     var url = opts.target;
-    var requestData = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["c" /* getRequestData */])('get', opts.data);
+    var requestData = (0, _core.getRequestData)('get', opts.data);
     var rootElement = document.body || document.head;
 
     /*------------------------------------------------------------*/
     var el = document.createElement('script');
 
     // data parse and set
-    el.src = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__core__["d" /* combineUrlQuery */])(url, [{ callback: id }, requestData && requestData.data]);
+    el.src = (0, _core.combineUrlQuery)(url, [{ callback: id }, requestData && requestData.data]);
 
     el.onerror = function () {
-      reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].REQUEST);
+      reject(_core.ERROR.REQUEST);
 
       // clear timer to prevent error
       window.clearTimeout(timerTrackID);
@@ -562,7 +607,7 @@ var isSupport = {
 
     // timeout track
     var timerTrackID = window.setTimeout(function () {
-      reject(__WEBPACK_IMPORTED_MODULE_0__core__["e" /* ERROR */].TIMEOUT);
+      reject(_core.ERROR.TIMEOUT);
     }, opts.timeout * 1e3 + 50); // with some buffer
 
     // callback func
@@ -577,57 +622,33 @@ var isSupport = {
       rootElement.removeChild(el);
     };
   });
-};;
+};
+
+var _core = __webpack_require__(0);
+
+;
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_ajax__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib_fetch__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_jsonp__ = __webpack_require__(3);
-/* harmony export (immutable) */ __webpack_exports__["customAdapter"] = customAdapter;
-/* harmony export (immutable) */ __webpack_exports__["globalConfig"] = globalConfig;
-/* harmony export (immutable) */ __webpack_exports__["ajax"] = ajax;
-/* harmony export (immutable) */ __webpack_exports__["jsonp"] = jsonp;
-/* harmony export (immutable) */ __webpack_exports__["fetch"] = fetch;
-/**
- * Request client for browser.
- * Support Fetch, AJAX, JSONP and even custom your own adapter
- *
- * @author jelly
- */
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-
-
-
-
-/*------------------------------------------------------------*/
-
-var CUSTOM_ADAPTER_MAP = {};
-
-/*------------------------------------------------------------*/
-
-/**
- * Request client that has all adapter capability
- * @param  {Object} opts - request options
- * @return {Promise} - request promise
- */
-/* harmony default export */ __webpack_exports__["default"] = function (opts) {
-  opts = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_core__["a" /* initOpts */])(opts);
+exports.default = function (opts) {
+  opts = (0, _core.initOpts)(opts);
 
   // first priority: claim type
   if (opts.type === 'ajax') {
-    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__lib_ajax__["a" /* default */])(opts);
+    return (0, _ajax3.default)(opts);
   } else if (opts.type === 'jsonp') {
-    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__lib_jsonp__["a" /* default */])(opts);
+    return (0, _jsonp3.default)(opts);
   } else if (opts.type === 'fetch') {
-    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__lib_fetch__["a" /* default */])(opts);
+    return (0, _fetch3.default)(opts);
   }
 
   // second priority: custom adapter
@@ -640,12 +661,54 @@ var CUSTOM_ADAPTER_MAP = {};
   }
 
   // third priority: fetch -> ajax
-  if (__WEBPACK_IMPORTED_MODULE_0__lib_core__["b" /* isSupport */].globalFetch) {
-    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__lib_fetch__["a" /* default */])(opts);
+  if (_core.isSupport.globalFetch) {
+    return (0, _fetch3.default)(opts);
   } else {
-    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__lib_ajax__["a" /* default */])(opts);
+    return (0, _ajax3.default)(opts);
   }
 };
+
+exports.customAdapter = customAdapter;
+exports.globalConfig = globalConfig;
+exports.ajax = ajax;
+exports.jsonp = jsonp;
+exports.fetch = fetch;
+
+var _core = __webpack_require__(0);
+
+var _ajax2 = __webpack_require__(1);
+
+var _ajax3 = _interopRequireDefault(_ajax2);
+
+var _fetch2 = __webpack_require__(2);
+
+var _fetch3 = _interopRequireDefault(_fetch2);
+
+var _jsonp2 = __webpack_require__(3);
+
+var _jsonp3 = _interopRequireDefault(_jsonp2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/*------------------------------------------------------------*/
+
+/**
+ * Request client for browser.
+ * Support Fetch, AJAX, JSONP and even custom your own adapter
+ *
+ * @author jelly
+ */
+
+var CUSTOM_ADAPTER_MAP = {};
+
+/*------------------------------------------------------------*/
+
+/**
+ * Request client that has all adapter capability
+ * @param  {Object} opts - request options
+ * @return {Promise} - request promise
+ */
+
 
 /**
  * Custom your own adapter
@@ -665,7 +728,7 @@ function customAdapter(name, adapter) {
 function globalConfig(opts) {
 
   // overwrite default global config, that will affect all request
-  __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__lib_core__["a" /* initOpts */])(opts, true);
+  (0, _core.initOpts)(opts, true);
 };
 
 /**
@@ -674,7 +737,7 @@ function globalConfig(opts) {
  * @return {Promise} - request promise
  */
 function ajax(opts) {
-  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__lib_ajax__["a" /* default */])(opts);
+  return (0, _ajax3.default)(opts);
 }
 
 /**
@@ -683,7 +746,7 @@ function ajax(opts) {
  * @return {Promise} - request promise
  */
 function jsonp(opts) {
-  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__lib_jsonp__["a" /* default */])(opts);
+  return (0, _jsonp3.default)(opts);
 }
 
 /**
@@ -692,7 +755,7 @@ function jsonp(opts) {
  * @return {Promise} - request promise
  */
 function fetch(opts) {
-  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__lib_fetch__["a" /* default */])(opts);
+  return (0, _fetch3.default)(opts);
 }
 
 /***/ })
