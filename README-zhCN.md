@@ -11,7 +11,7 @@ catta 是一个轻量级的 Javascript 浏览器请求框架，支持 Fetch，AJ
 
 - 支持自定义请求方式
 
-- 体积很小，压缩后小于 3KB！
+- 体积很小，压缩后小于 2.3KB！
 
   ​
 
@@ -40,9 +40,9 @@ catta('./data/simple.json').then(function (res) {
 
 ```javascript
 // CommonJS方式
-const Catta = require('catta');
+const catta = require('catta');
 
-Catta.default('./data/simple.json').then(function (res) {
+catta('./data/simple.json').then(function (res) {
   console.log(res);
 });
 ```
@@ -51,7 +51,7 @@ Catta.default('./data/simple.json').then(function (res) {
 <!-- <script> 标签引入HTML - *不推荐* -->
 <script src="./node_modules/catta/dist/catta.js"></script>
 <script>
-  Catta.default('./data/simple.json').then(function (res) {
+  catta.default('./data/simple.json').then(function (res) {
     console.log(res);
   });
 </script>
@@ -63,23 +63,21 @@ Catta.default('./data/simple.json').then(function (res) {
 
 ### Common Options
 
-|            | Description                           |             Type             |   Fetch   |   AJAX    |   JSONP   |
-| ---------- | :------------------------------------ | :--------------------------: | :-------: | :-------: | :-------: |
-| target     | 限定请求方式                           |            string            |     v     |     v     |     v     |
-| type       | 限制请求方式                 |    { fetch, ajax, jsonp }    |     —     |     —     |     —     |
-| method     | 请求方法                        |      { **get** , post }      |     v     |     v     |     v     |
-| data       | 发送到服务端的数据               | Object/Form Element **[3]**  |     v     |     v     |     v     |
-| timeout    | 请求超时时间 |            number            | ! **[1]** |     v     | ! **[1]** |
-| resultType | 返回值类型                    | { **text**, json, response } |     v     | ! **[2]** | ! **[2]** |
-| cross      | 是否允许跨域请求              |           boolean            |     v     |     v     |     v     |
-| withCookie | 跨域请求是否携带 Cookie |           boolean            |     v     |     v     |     v     |
-| headers    | 自定义头部                        |       Headers / Object       |     v     |     x     |     x     |
+|            | Description |             Type             |   Fetch   |   AJAX    |   JSONP   |
+| ---------- | :---------- | :--------------------------: | :-------: | :-------: | :-------: |
+| target     | 限定请求方式      |            string            |     v     |     v     |     v     |
+| type       | 限制请求方式      |    { fetch, ajax, jsonp }    |     —     |     —     |     —     |
+| method     | 请求方法        |      { **get** , post }      |     v     |     v     |     v     |
+| data       | 发送到服务端的数据   | Object/Form Element **[3]**  |     v     |     v     |     v     |
+| timeout    | 请求超时时间      |            number            | ! **[1]** |     v     | ! **[1]** |
+| resultType | 返回值类型       | { **text**, json, response } |     v     | ! **[2]** | ! **[2]** |
+| headers    | 自定义请求头      |       Headers / Object       |     v     |     v     |     x     |
 
 **v**  支持      **!** 部分支持      **×** 不支持
 
 1. Fetch 和 JSONP 请求不支持提前终止，所以仅仅会在超时后报错，请求仍会继续
-2. response 参数仅支持 Fetch 请求
-3. 仅通过 FormData 来支持文件上传（即 data 参数直接传 form element）
+2. response 参数不支持 jsonp 请求
+3. 仅通过 FormData 来支持 form element（即不支持 formData的浏览器，不支持 form element 参数类型）
 
 
 ## 示例
@@ -130,21 +128,38 @@ ajax('./data/simple.json').then(function (res) {
 
 
 
+#### 自定义请求头
+
+```javascript
+import catta from 'catta';
+
+catta('./data/complex.json', {
+  headers: {
+    'Content-Type': 'appliction/json'
+  }
+})
+.then(function (res) {
+  console.log(res);
+});
+```
+
+
+
 ### 自定义请求方式
 
 一个自定义的请求方式就是一个原生对象，对象含有 detector 和 processor 两个方法.更多细节参见 [mtop 请求方式示例](https://github.com/Joker-Jelly/catta/blob/master/lib/custom/mtop.js)
 
 ```javascript
-import {globalConfig, customAdapter} from 'catta';
+import catta from 'catta';
 import mtopAdapter from 'catta/lib/custom/mtop';
 
 // 设置全局配置，这个配置会在每次请求时均生效
-globalConfig({
+catta.globalConfig({
   timeout: 10
 });
 
 // 配置自定义请求方式 "mtop"
-customAdapter('mtop', mtopAdapter);
+catta.customAdapter('mtop', mtopAdapter);
 ```
 
 

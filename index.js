@@ -5,7 +5,7 @@
  * @author jelly
  */
 
-import { assign, initOpts, isSupport } from './lib/core';
+import * as utils from './lib/utils';
 
 import _ajax from './lib/ajax';
 import _fetch from './lib/fetch';
@@ -22,8 +22,8 @@ const CUSTOM_ADAPTER_MAP = {};
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-export default function(opts) {
-  opts = initOpts(opts);
+const catta = function(url, opts) {
+  opts = utils.initOpts(url, opts);
 
   // first priority: claim type
   if (opts.type === 'ajax') {
@@ -44,7 +44,7 @@ export default function(opts) {
   }
 
   // third priority: fetch -> ajax
-  if (isSupport.globalFetch) {
+  if (utils.isSupport.globalFetch) {
     return _fetch(opts);
   } else {
     return _ajax(opts);
@@ -59,7 +59,7 @@ export default function(opts) {
  * @param  {String} name    - adapter name
  * @param  {Object} adapter - Adapter object
  */
-export function customAdapter(name, adapter) {
+catta.customAdapter = function(name, adapter) {
   CUSTOM_ADAPTER_MAP[name] = adapter;
 };
 
@@ -67,10 +67,10 @@ export function customAdapter(name, adapter) {
  * Set Global Config of the request client, that will affect all the request
  * @param  {Object} opts - the options set globally
  */
-export function globalConfig(opts) {
+catta.globalConfig = function(opts) {
 
   // overwrite default global config, that will affect all request
-  initOpts(opts, true);
+  utils.initOpts(null, opts, true);
 
 };
 
@@ -79,7 +79,9 @@ export function globalConfig(opts) {
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-export function ajax(opts) {
+catta.ajax = function(url, opts) {
+  opts = utils.initOpts(url, opts);
+
   return _ajax(opts);
 }
 
@@ -88,7 +90,9 @@ export function ajax(opts) {
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-export function jsonp(opts) {
+catta.jsonp = function(url, opts) {
+  opts = utils.initOpts(url, opts);
+
   return _jsonp(opts);
 }
 
@@ -97,6 +101,10 @@ export function jsonp(opts) {
  * @param  {Object} opts - request options
  * @return {Promise} - request promise
  */
-export function fetch(opts) {
+catta.fetch = function(url, opts) {
+  opts = utils.initOpts(url, opts);
+
   return _fetch(opts);
 }
+
+module.exports = catta;

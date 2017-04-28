@@ -8,6 +8,7 @@ describe('Basic Test', () => {
   });
 
   it('Has request funcs', () => {
+    expect(catta.fetch).to.be.a('function');
     expect(fetch).to.be.a('function');
     expect(ajax).to.be.a('function');
     expect(jsonp).to.be.a('function');
@@ -37,13 +38,17 @@ describe('Request Test', () => {
 
   });
 
-  it('using ajax', (done) => {
+  it('using ajax with post', (done) => {
     const resource = require('./data/complex.json');
 
-    catta({
-      target: './data/complex.json',
+    catta('./data/complex.json', {
       data: {
-        a: '1'
+        a: '1',
+        b: {
+          c: {
+            d: [1,2,3]
+          }
+        }
       },
       type: 'ajax',
       withCookie: false
@@ -58,11 +63,10 @@ describe('Request Test', () => {
     const resource = require('./data/complex.json');
 
     // using jsonp
-    catta({
-      target: 'http://wthrcdn.etouch.cn/weather_mini',
+    catta('http://wthrcdn.etouch.cn/weather_mini', {
       type: 'jsonp',
       data: {
-        city: 'Beijing'
+        city: '北京'
       },
       resultType: 'json'
     })
@@ -74,8 +78,7 @@ describe('Request Test', () => {
 
 
   it('using fetch, result is response', (done) => {
-    catta({
-      target: './data/text.txt',
+    catta('./data/text.txt', {
       resultType: 'response',
       type: 'fetch',
       withCookie: false
@@ -86,6 +89,32 @@ describe('Request Test', () => {
     });
   });
 
+  it('custom header', (done) => {
+    catta('./data/complex.json', {
+      headers: {
+        'Content-Type': 'appliction/json'
+      }
+    })
+    .then(function (res) {
+      expect(res).to.be.an.instanceof(Object);
+      done();
+    });
+  });
+
+  it('using fetch, send form data with post', (done) => {
+    catta('http://wthrcdn.etouch.cn/weather_mini', {
+      type: 'jsonp',
+      data: {
+        city: '北京'
+      },
+      resultType: 'json'
+    })
+    .then((res) => {
+      expect(res).to.be.an.instanceof(Object);
+      done();
+    })
+  });
+
 });
 
 describe('Special Request Test', () => {
@@ -93,8 +122,7 @@ describe('Special Request Test', () => {
   it('timeout error', (done) => {
 
     // timeout error
-    catta({
-      target: 'http://wthrcdn.etouch.cn/weather_mini',
+    catta('http://wthrcdn.etouch.cn/weather_mini', {
       type: 'jsonp',
       resultType: 'json',
       timeout: 0

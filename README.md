@@ -13,7 +13,7 @@ Support Fetch, AJAX, JSONP and even custom your own adapter.
 
 - Custom own adapter
 
-- light weight, less then 3KB (min + gzip)
+- light weight, less then 2.3KB (min + gzip)
 
 
 
@@ -41,9 +41,9 @@ catta('./data/simple.json').then(function (res) {
 
 ```javascript
 // With CommonJS
-const Catta = require('catta');
+const catta = require('catta');
 
-Catta.default('./data/simple.json').then(function (res) {
+catta('./data/simple.json').then(function (res) {
   console.log(res);
 });
 ```
@@ -52,7 +52,7 @@ Catta.default('./data/simple.json').then(function (res) {
 <!-- And also with <script> in HTML - *Not Recommend* -->
 <script src="./node_modules/catta/dist/catta.js"></script>
 <script>
-  Catta.default('./data/simple.json').then(function (res) {
+  catta('./data/simple.json').then(function (res) {
     console.log(res);
   });
 </script>
@@ -64,23 +64,21 @@ Catta.default('./data/simple.json').then(function (res) {
 
 ### Common Options
 
-|            | Description                           |             Type             |   Fetch   |   AJAX    |   JSONP   |
-| ---------- | :------------------------------------ | :--------------------------: | :-------: | :-------: | :-------: |
-| target     | request url                           |            string            |     v     |     v     |     v     |
-| type       | restrict request type                 |    { fetch, ajax, jsonp }    |     —     |     —     |     —     |
-| method     | request method                        |      { **get** , post }      |     v     |     v     |     v     |
-| data       | the data send to server               | Object/Form Element **[3]**  |     v     |     v     |     v     |
-| timeout    | throw timeout error after **seconds** |            number            | ! **[1]** |     v     | ! **[1]** |
-| resultType | the type of result                    | { **text**, json, response } |     v     | ! **[2]** | ! **[2]** |
-| cross      | Whether can cross origin              |           boolean            |     v     |     v     |     v     |
-| withCookie | Whether send cookie when cross origin |           boolean            |     v     |     v     |     v     |
-| headers    | custom headers                        |       Headers / Object       |     v     |     x     |     x     |
+|            | Description                           |                 Type                  |   Fetch   | AJAX |   JSONP   |
+| ---------- | :------------------------------------ | :-----------------------------------: | :-------: | :--: | :-------: |
+| url        | request url                           |                string                 |     v     |  v   |     v     |
+| type       | restrict request type                 |        { fetch, ajax, jsonp }         |     —     |  —   |     —     |
+| method     | request method                        | { **get** , post, put, delete, head } |     v     |  v   |     x     |
+| data       | the data send to server               |  string/Object/Form Element **[3]**   |     v     |  v   |     v     |
+| timeout    | throw timeout error after **seconds** |                number                 | ! **[1]** |  v   | ! **[1]** |
+| resultType | the type of result                    |     { **text**, json, response }      |     v     |  v   | ! **[2]** |
+| headers    | custom headers                        |           Headers / Object            |     v     |  v   |     x     |
 
 **v**  Supported      **!** Partial Supported      **×** Not Supported
 
 1. Fetch and JSONP request can't be abort, current timeout is just throw timeout error
-2. *response* option only work with fetch
-3. Only support upload file with FormData
+2. *response* option can't work with jsonp
+3. Only support form element with formData
 
 
 
@@ -110,9 +108,7 @@ catta({
     count: 20
   },
   timeout: 2, 
-  type: 'ajax',
-  cross: true,
-  withCookie: false
+  type: 'ajax'
 })
 .then(res => console.log(res))
 .catch(err => console.log(err));
@@ -132,21 +128,38 @@ ajax('./data/simple.json').then(function (res) {
 
 
 
+#### Custom headers
+
+```javascript
+import catta from 'catta';
+
+catta('./data/complex.json', {
+  headers: {
+    'Content-Type': 'appliction/json'
+  }
+})
+.then(function (res) {
+  console.log(res);
+});
+```
+
+
+
 ### Custom adapter
 
 A custom adapter is just an object, that has `detector` and `processor` function.More detail see [mtop adapter example](https://github.com/Joker-Jelly/catta/blob/master/lib/custom/mtop.js)
 
 ```javascript
-import {globalConfig, customAdapter} from 'catta';
+import catta from 'catta';
 import mtopAdapter from 'catta/lib/custom/mtop';
 
 // set global config, it will work for each request
-globalConfig({
+catta.globalConfig({
   timeout: 10
 });
 
 // set mtop adapter
-customAdapter('mtop', mtopAdapter);
+catta.customAdapter('mtop', mtopAdapter);
 ```
 
 
