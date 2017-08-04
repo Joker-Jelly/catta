@@ -107,7 +107,7 @@ catta({
     page: 5,
     count: 20
   },
-  timeout: 2, 
+  timeout: 2,
   type: 'ajax'
 })
 .then(res => console.log(res))
