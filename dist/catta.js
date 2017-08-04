@@ -455,8 +455,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = function (opts) {
   return new Promise(function (resolve, reject) {
     // jsonp random id
+    var jsonpOpts = opts.jsonp || {};
+
     var randomSeed = String(Math.random()).replace('.', '');
-    var id = 'jsonp' + randomSeed;
+    var id = jsonpOpts.callbackName || 'jsonp' + randomSeed;
     var url = opts.url;
     var requestData = utils.getRequestData('get', opts.data);
     var rootElement = document.body || document.head;
