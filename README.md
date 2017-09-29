@@ -8,7 +8,7 @@ Support Fetch, AJAX, JSONP and even custom your own adapter.
 - Dead simple to use
 - Uniform options and usage for each adapter
 - Support all modern browser (include IE 9+, with comp. version)
-- Support auto-detect browser to choice adapter ([more detail](#Other_notices))
+- Support auto-detect browser to choice adapter ([more detail](#Other-notices))
 - Custom own adapter
 - light weight, core version less then 2.3KB (min + gzip)
 
