@@ -4,16 +4,25 @@
 catta 是一个轻量级的 Javascript 浏览器请求框架，支持 Fetch，AJAX，JSONP，甚至支持自定义的请求方式。
 
 - 使用非常非常非常简单
-
-- 支持自动检测浏览器来选择请求方式
-
 - 统一各种请求方式的参数
-
+- 支持所有 “现代” 浏览器 (兼容版本可以支持 IE 9+)
+- 支持自动检测浏览器来选择请求方式 ([自动检测逻辑](##Attention))
 - 支持自定义请求方式
-
 - 体积很小，压缩后小于 2.3KB！
 
-  ​
+
+## 浏览器支持情况
+
+- `catta-min.js`: 
+  - 所有现代浏览器
+  - 没有额外的 ES6+ 特性兼容包引入，仅是纯净核心库
+- `catta-min-comp.js`: 
+  - 所有现代浏览器, 甚至是IE 9+
+  - 核心库打包 **Promise** 和 **Object.assign** 兼容库
+  - 没有 [**Formdata**](https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData) 兼容库, 如果需要通过 `{data: HTMLFormElement}` 提交数据，则需要 IE 10+
+  - 没有 [**Global Fetch**](https://developer.mozilla.org/en-US/docs/Web/API/GlobalFetch) 兼容库, 如果浏览器不支持, 则自动降级到 **AJAX**
+
+推荐使用纯净核心库，如果你的项目中已经有这些 ES6+ 兼容库，或者你并不想支持 IE
 
 
 ## 使用方式
@@ -31,9 +40,9 @@ npm install catta --save
 
 ```javascript
 // ES6方式 - *推荐*
-import catta from 'catta';
+import catta, {ajax} from 'catta';
 
-catta('./data/simple.json').then(function (res) {
+catta('http://some/url').then(function (res) {
   console.log(res);
 });
 ```
@@ -42,136 +51,24 @@ catta('./data/simple.json').then(function (res) {
 // CommonJS方式
 const catta = require('catta');
 
-catta('./data/simple.json').then(function (res) {
+catta.default('http://some/url').then(function (res) {
   console.log(res);
 });
 ```
 
 ```html
 <!-- <script> 标签引入HTML - *不推荐* -->
-<script src="./node_modules/catta/dist/catta.js"></script>
+<script src="./node_modules/catta/dist/catta-min.js"></script>
 <script>
-  catta.default('./data/simple.json').then(function (res) {
+  catta.default('http://some/url').then(function (res) {
     console.log(res);
   });
 </script>
 ```
 
+## 其他
 
-
-## Options
-
-### Common Options
-
-|            | Description |             Type             |   Fetch   |   AJAX    |   JSONP   |
-| ---------- | :---------- | :--------------------------: | :-------: | :-------: | :-------: |
-| target     | 限定请求方式      |            string            |     v     |     v     |     v     |
-| type       | 限制请求方式      |    { fetch, ajax, jsonp }    |     —     |     —     |     —     |
-| method     | 请求方法        |      { **get** , post }      |     v     |     v     |     v     |
-| data       | 发送到服务端的数据   | Object/Form Element **[3]**  |     v     |     v     |     v     |
-| timeout    | 请求超时时间      |            number            | ! **[1]** |     v     | ! **[1]** |
-| resultType | 返回值类型       | { **text**, json, response } |     v     | ! **[2]** | ! **[2]** |
-| headers    | 自定义请求头      |       Headers / Object       |     v     |     v     |     x     |
-
-**v**  支持      **!** 部分支持      **×** 不支持
-
-1. Fetch 和 JSONP 请求不支持提前终止，所以仅仅会在超时后报错，请求仍会继续
-2. response 参数不支持 jsonp 请求
-3. 仅通过 FormData 来支持 form element（即不支持 formData的浏览器，不支持 form element 参数类型）
-
-
-## 示例
-
-#### 最简单形式
-
-```javascript
-import catta from 'catta';
-
-catta('./data/simple.json').then(function (res) {
-  console.log(res);
-});
-```
-
-
-
-#### 带参数的形式
-
-```javascript
-import catta from 'catta';
-
-catta({
-  target: './data/complex.json',
-  data: {
-    page: 5,
-    count: 20
-  },
-  timeout: 2, 
-  type: 'ajax',
-  cross: true,
-  withCookie: false
-})
-.then(res => console.log(res))
-.catch(err => console.log(err));
-```
-
-
-
-#### 单独使用 Fetch / AJAX / JSONP
-
-```javascript
-import {ajax} from 'catta';
-
-ajax('./data/simple.json').then(function (res) {
-  console.log(res);
-});
-```
-
-
-
-#### 自定义请求头
-
-```javascript
-import catta from 'catta';
-
-catta('./data/complex.json', {
-  headers: {
-    'Content-Type': 'appliction/json'
-  }
-})
-.then(function (res) {
-  console.log(res);
-});
-```
-
-
-
-### 自定义请求方式
-
-一个自定义的请求方式就是一个原生对象，对象含有 detector 和 processor 两个方法.更多细节参见 [mtop 请求方式示例](https://github.com/Joker-Jelly/catta/blob/master/lib/custom/mtop.js)
-
-```javascript
-import catta from 'catta';
-import mtopAdapter from 'catta/lib/custom/mtop';
-
-// 设置全局配置，这个配置会在每次请求时均生效
-catta.globalConfig({
-  timeout: 10
-});
-
-// 配置自定义请求方式 "mtop"
-catta.customAdapter('mtop', mtopAdapter);
-```
-
-
-
-## 注意
-
-- 自动选择请求方式的逻辑
-  - 指定 `options.type`
-  - 匹配到自定义请求方式
-  - 如果支持 Fetch，则使用 fetch，否则降级为 ajax
-
-
+**其他内容参见 [英文文档](https://github.com/Joker-Jelly/catta/blob/master/README.md)，懒得翻译了... ^_^**
 
 ## 许可
 

@@ -8,11 +8,9 @@ describe('Basic Test', () => {
   });
 
   it('Has request funcs', () => {
-    expect(catta.fetch).to.be.a('function');
     expect(fetch).to.be.a('function');
     expect(ajax).to.be.a('function');
     expect(jsonp).to.be.a('function');
-
   });
 
   it('Has globalConfig', () => {
@@ -51,7 +49,7 @@ describe('Request Test', () => {
         }
       },
       type: 'ajax',
-      withCookie: false
+      credential: false
     })
     .then(function (res) {
       expect(res).to.be.deep.equal(resource);
@@ -63,7 +61,8 @@ describe('Request Test', () => {
     const resource = require('./data/complex.json');
 
     // using jsonp
-    catta('http://wthrcdn.etouch.cn/weather_mini', {
+    catta({
+      url: 'http://wthrcdn.etouch.cn/weather_mini',
       type: 'jsonp',
       data: {
         city: '北京'
@@ -81,7 +80,7 @@ describe('Request Test', () => {
     catta('./data/text.txt', {
       resultType: 'response',
       type: 'fetch',
-      withCookie: false
+      credential: false
     })
     .then(function (res) {
       expect(res).to.be.an.instanceof(Response);
@@ -101,13 +100,14 @@ describe('Request Test', () => {
     });
   });
 
-  it('using fetch, send form data with post', (done) => {
-    catta('http://wthrcdn.etouch.cn/weather_mini', {
-      type: 'jsonp',
+  it('using fetch, via post, no cookie send', (done) => {
+    fetch('https://dog.ceo/api/breeds/image/random', {
+      method: 'post',
       data: {
-        city: '北京'
+        brand: 'hound'
       },
-      resultType: 'json'
+      resultType: 'json',
+      credential: false
     })
     .then((res) => {
       expect(res).to.be.an.instanceof(Object);
@@ -128,7 +128,7 @@ describe('Special Request Test', () => {
       timeout: 0
     })
     .catch((err) => {
-      expect(err).to.be.equal('[Timeout Error]: the request has been take over given time');
+      expect(err).to.be.an('object');
       done();
     });
 

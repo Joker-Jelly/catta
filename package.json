@@ -1,6 +1,6 @@
 {
   "name": "catta",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Simple promise base request client for browser",
   "keywords": [
     "promise",
@@ -10,15 +10,20 @@
     "jsonp",
     "browser"
   ],
-  "main": "./dist/catta.js",
+  "main": "./dist/catta-min.js",
   "scripts": {
-    "test": "sh ./bin/test.sh",
-    "dist": "sh ./bin/dist.sh"
+    "test": "simplepack dev --entry ./test/index.js",
+    "dev": "simplepack dev --entry ./test/index.js",
+    "p": "simplepack publish"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:Joker-Jelly/catta.git"
   },
   "author": "Jelly",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "core-js": "^2.5.1",
+    "es6-promise": "^4.1.1"
+  }
 }
