@@ -77,23 +77,21 @@ catta.default('http://some/url').then(function (res) {
 
 ### Important Options
 
-|         | Description             |                 Type                  | Fetch | AJAX | JSONP |
-| :------ | :---------------------- | :-----------------------------------: | :---: | :--: | :---: |
-| **url** | request url             |                string                 |   v   |  v   |   v   |
-| method  | request method          | { **get** , post, put, delete, head } |   v   |  v   |   x   |
-| data    | the data send to server |  string/Object/Form Element **[3]**   |   v   |  v   |   v   |
+|         | Description             | Type                                     | Default | Fetch | AJAX | JSONP |
+| :------ | :---------------------- | :--------------------------------------- | :-----: | :---: | :--: | :---: |
+| **url** | request url             | string                                   |  null   |   v   |  v   |   v   |
+| method  | request method          | string { get , post, put, delete, head } |  'get'  |   v   |  v   |   x   |
+| data    | the data send to server | string/Object/Form Element **[3]**       |   {}    |   v   |  v   |   v   |
 
 
 
 ### Secondary Options
 
-|            | Description                              | Type                         | Fetch     | AJAX | JSONP     |
-| ---------- | ---------------------------------------- | ---------------------------- | --------- | ---- | --------- |
-| type       | restrict request type                    | { fetch, ajax, jsonp }       | —         | —    | —         |
-| timeout    | throw timeout error after **seconds**    | number                       | ! **[1]** | v    | ! **[1]** |
-| resultType | the type of result                       | { **text**, json, response } | v         | v    | ! **[2]** |
-| headers    | custom headers                           | Headers / Object             | v         | v    | x         |
-| credential | whether or not **cross-origin** request send with credential | boolean                      | v         | v    | x         |
+|            | Description                           | Type                          | Default |   Fetch   | AJAX |   JSONP   |
+| ---------- | ------------------------------------- | ----------------------------- | :-----: | :-------: | :--: | :-------: |
+| type       | restrict request type                 | string { fetch, ajax, jsonp } | 'auto'  |     —     |  —   |     —     |
+| timeout    | throw timeout error after **seconds** | number                        |    3    | ! **[1]** |  v   | ! **[1]** |
+| resultType | the type of result                    | { text, json, response }      |  text   |     v     |  v   | ! **[2]** |
 
 
 **v**  Supported      **!** Partial Supported      **×** Not Supported
