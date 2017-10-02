@@ -12,8 +12,8 @@
   ],
   "main": "./dist/catta-min.js",
   "scripts": {
-    "test": "simplepack dev --entry ./test/index.js",
-    "dev": "simplepack dev --entry ./test/index.js",
+    "test": "simplepack dev --entry ./test/index.js --cli-only",
+    "dev": "simplepack dev --entry ./test/index.js --cli-only",
     "p": "simplepack publish"
   },
   "repository": {
