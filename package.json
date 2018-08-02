@@ -1,6 +1,6 @@
 {
   "name": "catta",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Simple promise base request client for browser",
   "keywords": [
     "promise",
