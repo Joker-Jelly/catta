@@ -1,4 +1,6 @@
-![forthebadge](http://forthebadge.com/images/badges/uses-js.svg) ![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)
+![forthebadge](http://forthebadge.com/images/badges/uses-js.svg) 
+![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)
+![sizebadge](http://img.badgesize.io/Joker-Jelly/catta/master/dist/catta-min.js?compression=gzip)
 
 ## catta
 catta is a simple request client for browser
@@ -10,7 +12,7 @@ Support Fetch, AJAX, JSONP and even custom your own adapter.
 - Support all modern browser (include IE 9+, with comp. version)
 - Support auto-detect browser to choice adapter ([more detail](#other-notices))
 - Custom own adapter
-- light weight, core version less then 2.3KB (min + gzip)
+- light weight, core version less then 2 KB (min + gzip)
 
 
 
@@ -43,7 +45,7 @@ npm install catta --save
 
 ```javascript
 // With ES6 - *Recommend*
-import catta, {ajax} from 'catta';
+import catta from 'catta';
 
 catta('http://some/url').then(function (res) {
   console.log(res);
@@ -75,6 +77,29 @@ catta.default('http://some/url').then(function (res) {
 
 ## Options
 
+### API
+
+```javascript
+  import {ajax, fetch, jsonp, getScript} from 'catta';
+
+  /**
+   * make fetch/ajax/jsonp/getScript request
+   * @param {string} url - request url
+   * @param {Object} options - request options
+   * 
+   */
+  ajax(url, options);
+
+  // fetch request
+  fetch(url, options);
+
+  // jsonp request
+  jsonp(url, options);
+
+  // getScript 
+  getScript(url);
+```
+
 ### Important Options
 
 |         | Description             | Type                                     | Default | Fetch | AJAX | JSONP |
@@ -89,7 +114,7 @@ catta.default('http://some/url').then(function (res) {
 
 |            | Description                           | Type                          | Default |   Fetch   | AJAX |   JSONP   |
 | ---------- | ------------------------------------- | ----------------------------- | :-----: | :-------: | :--: | :-------: |
-| type       | restrict request type                 | string { fetch, ajax, jsonp } | 'auto'  |     —     |  —   |     —     |
+| type       | restrict request type                 | string { fetch, ajax, jsonp, script } | 'auto'  |     —     |  —   |     —     |
 | timeout    | throw timeout error after **seconds** | number                        |    3    | ! **[1]** |  v   | ! **[1]** |
 | resultType | the type of result                    | { text, json, response }      |  text   |     v     |  v   | ! **[2]** |
 
@@ -135,9 +160,8 @@ catta('http://some/url').then(function (res) {
 ```javascript
 import catta from 'catta';
 
-catta({
+catta('http://some/url', {
   type: 'jsonp',
-  url: 'http://some/url',
   data: {
     page: 5,
     count: 20
@@ -160,24 +184,15 @@ catta({
 #### Only use Fetch / AJAX / JSONP
 
 ```javascript
-import catta, {ajax, fetch, jsonp} from 'catta';
+import {fetch} from 'catta';
 
-// only use ajax
-ajax('http://some/url', {
+// only use fetch
+fetch('http://some/url', {
   data: {a:1}
 }).then(function (res) {
   console.log(res);
 });
 
-// same to above
-catta.ajax({
-  url: 'http://some/url',
-  data: {a:1}
-}).then(function (res) {
-  console.log(res);
-});
-
-// or catta({type: 'ajax'})
 ```
 
 

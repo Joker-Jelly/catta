@@ -11,10 +11,17 @@
     "browser"
   ],
   "main": "./dist/catta-min.js",
+  "size-limit": [
+    {
+      "path": "./dist/catta-min.js"
+    }
+  ],
   "scripts": {
+    "size": "size-limit",
+    "server": "micro ./test/server/index.js",
     "test": "simplepack dev --entry ./test/index.js --cli-only",
     "dev": "simplepack dev --entry ./test/index.js --cli-only",
-    "p": "simplepack publish"
+    "p": "simplepack publish ; npm run size"
   },
   "repository": {
     "type": "git",
@@ -24,6 +31,9 @@
   "license": "MIT",
   "devDependencies": {
     "core-js": "^2.5.1",
-    "es6-promise": "^4.1.1"
+    "es6-promise": "^4.1.1",
+    "micro": "^9.3.3",
+    "micro-cors": "^0.1.1",
+    "size-limit": "^0.21.0"
   }
 }

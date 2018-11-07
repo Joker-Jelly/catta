@@ -1,6 +1,8 @@
 import catta, {ajax, jsonp, fetch, globalConfig, customAdapter} from '../index';
 const expect = chai.expect;
 
+const REMOTE_TEXT_SERVER = 'http://127.0.0.1:3000';
+
 describe('Basic Test', () => {
 
   it('Has deault request func', () => {
@@ -26,10 +28,10 @@ describe('Basic Test', () => {
 describe('Request Test', () => {
 
   it('simple, default use fetch', (done) => {
-    const resource = require('./data/simple.json');
+    const resource = require('./server/data/simple.json');
 
     // simple
-    catta('./data/simple.json').then(function (res) {
+    catta('./server/data/simple.json').then(function (res) {
       expect(res).to.be.deep.equal(resource);
       done();
     });
@@ -37,16 +39,12 @@ describe('Request Test', () => {
   });
 
   it('using ajax with post', (done) => {
-    const resource = require('./data/complex.json');
+    const resource = require('./server/data/complex.json');
 
-    catta('./data/complex.json', {
+    catta(REMOTE_TEXT_SERVER, {
+      method: 'post',
       data: {
-        a: '1',
-        b: {
-          c: {
-            d: [1,2,3]
-          }
-        }
+        type: 'complex'
       },
       type: 'ajax',
       credential: false
@@ -58,11 +56,10 @@ describe('Request Test', () => {
   });
 
   it('using jsonp', (done) => {
-    const resource = require('./data/complex.json');
+    const resource = require('./server/data/complex.json');
 
     // using jsonp
-    catta({
-      url: 'http://wthrcdn.etouch.cn/weather_mini',
+    catta('http://wthrcdn.etouch.cn/weather_mini', {
       type: 'jsonp',
       data: {
         city: '北京'
@@ -77,9 +74,8 @@ describe('Request Test', () => {
 
 
   it('using fetch, result is response', (done) => {
-    catta('./data/text.txt', {
+    catta(REMOTE_TEXT_SERVER, {
       resultType: 'response',
-      type: 'fetch',
       credential: false
     })
     .then(function (res) {
@@ -89,28 +85,51 @@ describe('Request Test', () => {
   });
 
   it('custom header', (done) => {
-    catta('./data/complex.json', {
+    catta(REMOTE_TEXT_SERVER, {
+      method: 'post',
+      data: {
+        type: 'complex',
+        to: 'string'
+      },
+      resultType: 'text',
+      credential: false,
       headers: {
-        'Content-Type': 'appliction/json'
+        'Content-Type': 'text/plain'
       }
     })
     .then(function (res) {
-      expect(res).to.be.an.instanceof(Object);
+      expect(res).to.be.an('string');
       done();
     });
   });
 
   it('using fetch, via post, no cookie send', (done) => {
-    fetch('https://dog.ceo/api/breeds/image/random', {
+    const resource = require('./server/data/complex.json');
+
+    fetch(REMOTE_TEXT_SERVER, {
       method: 'post',
       data: {
-        brand: 'hound'
+        type: 'complex'
       },
       resultType: 'json',
       credential: false
     })
     .then((res) => {
-      expect(res).to.be.an.instanceof(Object);
+      expect(res).to.be.deep.equal(resource);
+      done();
+    })
+  });
+
+  it('using fetch, via post, send form data', () => {
+    const $form = window['test-form'];
+    fetch(REMOTE_TEXT_SERVER, {
+      method: 'post',
+      data: $form,
+      resultType: 'json',
+      credential: false
+    })
+    .then((res) => {
+      expect(res).to.be.an('object');
       done();
     })
   });

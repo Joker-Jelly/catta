@@ -10,6 +10,7 @@ import * as utils from './lib/utils';
 import _ajax from './lib/ajax';
 import _fetch from './lib/fetch';
 import _jsonp from './lib/jsonp';
+import _getScript from './lib/script';
 
 /*------------------------------------------------------------*/
 
@@ -19,19 +20,21 @@ const CUSTOM_ADAPTER_MAP = {};
 
 /**
  * Request client that has all adapter capability
- * @param  {Object} opts - request options
+ * @param {string} url  - request url
+ * @param {Object} opts - request options (for detail, see README)
  * @return {Promise} - request promise
  */
-export default function(url, opts) {
-  opts = utils.initOpts(url, opts);
-
+export default function(url, opts={}) {
+  
   // first priority: claim type
   if (opts.type === 'ajax') {
-    return _ajax(opts);
+    return _ajax(url, opts);
   } else if (opts.type === 'jsonp') {
-    return _jsonp(opts);
+    return _jsonp(url, opts);
   } else if (opts.type === 'fetch') {
-    return _fetch(opts);
+    return _fetch(url, opts);
+  } else if (opts.type === 'script') {
+    return _getScript(url, opts);
   }
 
   // second priority: custom adapter
@@ -39,15 +42,15 @@ export default function(url, opts) {
     const adapter = CUSTOM_ADAPTER_MAP[name];
 
     if (adapter.detector(opts)) {
-      return adapter.processor(opts);
+      return adapter.processor(url, opts);
     }
   }
 
   // third priority: fetch -> ajax
   if (utils.isSupport.globalFetch) {
-    return _fetch(opts);
+    return _fetch(url, opts);
   } else {
-    return _ajax(opts);
+    return _ajax(url, opts);
   }
 
 }
@@ -70,39 +73,11 @@ export function customAdapter(name, adapter) {
 export function globalConfig(opts) {
 
   // overwrite default global config, that will affect all request
-  utils.initOpts(null, opts, true);
+  utils.initOpts(opts, true);
 
 };
 
-/**
- * Only make AJAX request
- * @param  {Object} opts - request options
- * @return {Promise} - request promise
- */
-export function ajax(url, opts) {
-  opts = utils.initOpts(url, opts);
-
-  return _ajax(opts);
-}
-
-/**
- * Only make JSONP request
- * @param  {Object} opts - request options
- * @return {Promise} - request promise
- */
-export function jsonp(url, opts) {
-  opts = utils.initOpts(url, opts);
-
-  return _jsonp(opts);
-}
-
-/**
- * Only make Fetch request
- * @param  {Object} opts - request options
- * @return {Promise} - request promise
- */
-export function fetch(url, opts) {
-  opts = utils.initOpts(url, opts);
-
-  return _fetch(opts);
-}
+export const ajax = _ajax;
+export const jsonp = _jsonp;
+export const fetch = _fetch;
+export const getScript = _getScript;

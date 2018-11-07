@@ -1,4 +1,6 @@
-![forthebadge](http://forthebadge.com/images/badges/uses-js.svg) ![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)
+![forthebadge](http://forthebadge.com/images/badges/uses-js.svg) 
+![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)
+![sizebadge](http://img.badgesize.io/Joker-Jelly/catta/master/dist/catta-min.js?compression=gzip)
 
 ## catta
 catta 是一个轻量级的 Javascript 浏览器请求框架，支持 Fetch，AJAX，JSONP，甚至支持自定义的请求方式。
@@ -8,7 +10,7 @@ catta 是一个轻量级的 Javascript 浏览器请求框架，支持 Fetch，AJ
 - 支持所有 “现代” 浏览器 (兼容版本可以支持 IE 9+)
 - 支持自动检测浏览器来选择请求方式 ([自动检测逻辑](##Attention))
 - 支持自定义请求方式
-- 体积很小，压缩后小于 2.3KB！
+- 体积很小，压缩后小于 2 KB！
 
 
 ## 浏览器支持情况

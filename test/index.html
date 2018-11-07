@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="mocha.css" />
   </head>
   <body>
+    <form name="test-form" style="display: none">
+      <input type="text" name="text-field" value="input-some-text">
+      <select name="select-field" id="">
+        <option value="select-some-option" selected></option>
+      </select>
+      <input name="checkbox-field" type="checkbox" checked>
+    </form>
     <div id="mocha"></div>
     <script src="mocha.js"></script>
     <script src="chai.js"></script>
